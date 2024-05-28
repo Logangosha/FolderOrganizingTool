@@ -1,0 +1,15 @@
+{
+  "name": "my-electron-app",
+  "version": "1.0.0",
+  "description": "Hello World!",
+  "main": "./controller/main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev:watch": "npx electronmon --trace-warnings ."
+  },
+  "author": "Logan Gauchat",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^30.0.6"
+  }
+}
