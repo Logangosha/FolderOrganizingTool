@@ -23,11 +23,42 @@ class Directory {
         }
     }
 
+    // toJSON() {
+    //     return {
+    //         DirectoryName: this.Metadata.name,
+    //         DirectoryItems: this.DirectoryItems.map(item => item.toJSON()),
+    //         Subdirectories: this.Subdirectories.map(subdir => subdir.toJSON())
+    //     };
+    // }
+    
+    
+    // Main recursive function to convert directory structure to JSON
+    convertToJSON() {
+        const items = [];
+    
+        // Process directory items
+        if (this.DirectoryItems.length > 0) {
+            this.DirectoryItems.forEach(item => {
+                const itemName = item.Metadata.name;
+                items.push(itemName); // Add each item directly to the list
+            });
+        }
+    
+         // Process subdirectories
+        if (this.Subdirectories.length > 0) {
+            this.Subdirectories.forEach(subdir => {
+                const subdirObj = {};
+                subdirObj[subdir.Metadata.name] = subdir.convertToJSON();
+                items.push(subdirObj); // Add each subdirectory with its name to the list
+            });
+        }
+        return items;
+    }
+    
+
     toJSON() {
         return {
-            Metadata: this.Metadata,
-            DirectoryItems: this.DirectoryItems.map(item => item.toJSON()),
-            Subdirectories: this.Subdirectories.map(subdir => subdir.toJSON())
+            [this.Metadata.name]: this.convertToJSON()
         };
     }
 }
@@ -45,9 +76,7 @@ class DirectoryItem
         this.Metadata = null;
     }
     toJSON() {
-        return {
-            Metadata: this.Metadata
-        };
+        return (this.Metadata.name + this.Metadata.extension);
     }
 }
 
