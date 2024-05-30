@@ -1,3 +1,5 @@
+
+const { GoogleGenerativeAI } = require("@google/generative-ai");
 const { app, BrowserWindow, ipcMain, dialog } = require("electron");
 const url = require("url");
 const fs = require("fs");
@@ -5,6 +7,8 @@ const path = require("path");
 const  { Directory, Subdirectory, DirectoryItem, DirectoryMetadata, DirectoryItemMetadata } = require("../model/FileSystemEntities.js");
 const { dir } = require("console");
 
+const API_KEY = "AIzaSyBhrHB3uJygVJcbXXhPaZKI5xlFM6TTkWE";
+const genAI = new GoogleGenerativeAI(API_KEY);
 
 function createMainWindow() {
     const mainWindow = new BrowserWindow({
@@ -26,30 +30,12 @@ function createMainWindow() {
         // get results
         const result = await dialog.showOpenDialog(mainWindow, options);
         return result.filePaths[0];
-        // // create new directory 
-        // var directory = new Directory();
-
-        // // create metadata object for new directory
-        // var directoryMetadata = new DirectoryMetadata();
-        // directoryMetadata.name = path.basename(result.filePaths[0]);
-        // directoryMetadata.path = result.filePaths[0];
-
-        // // add metadata to directory
-        // directory.Metadata = directoryMetadata;
-
-        // // initialize the directory 
-        // directory = await initializeDirectory(directory);
-
-        // return directory
-        // return directory;
     });
 }
-
 ipcMain.handle('path-basename', (event, filePaths) => {
     const result = path.basename(filePaths);
     return result;
 });
-
 ipcMain.handle('getDirectory', async (event, directoryPath) =>{
     // // create new directory 
     var directory = new Directory();
@@ -67,14 +53,33 @@ ipcMain.handle('getDirectory', async (event, directoryPath) =>{
 
     return directory;
 })
-
 ipcMain.handle('generatePromptFromDirectory', async (event, dir) => {
     // create new directory object
     var directory = await reconstructDirectory(dir)
+    // define the refined prompt
+    var prompt = "Please organize this directory JSON object. \n" +
+                 "You may create new folders as necessary. \n" +
+                 "Ensure each file is included only once; do not create or duplicate files. \n" +
+                 "Do not return any other text, only return a JSON object.\n" +
+                 "Organize This Directory:\n";    
     // create json string
-    return JSON.stringify(directory.toJSON(), null, 2);
+    var directoryToJSON = JSON.stringify(directory.toJSON(), null, 2);
+    // add json string to prompt
+    prompt += directoryToJSON;
+    return {
+        prompt,
+        directoryToJSON,
+      };
 })
+ipcMain.handle('sendPromptToLLM', async (event,prompt) => {
+    // const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash"});
+    // const result = await model.generateContent(prompt);
+    // const response = await result.response;
+    // const text = response.text();
+    const text = `{"TestDirectory": {"Documents": ["BackLog.docx", "Librarian Project.docx", "UseCaseDiagramTextualDescriptions.docx", "Librarian Goal Definitions.docx", "Initial Reasearch Sprint Step 1.docx"], "Diagrams": ["SystemFlowchartDiagram.drawio", "USECASEDIAGRAM.drawio"], "Diagrams - Backups": [".SystemFlowchartDiagram.drawio.bkp", ".USECASEDIAGRAM.drawio.bkp"], "Modeling": {"Class Diagrams": "ClassDiagrams.mdj", "Class Identification": "ClassIdentification.docx"}}}}`;
 
+    return text;
+} )
 async function reconstructDirectory(dir) {
     let reconstructedDirectory = new Directory();
 
@@ -117,11 +122,8 @@ async function reconstructDirectory(dir) {
         return await reconstructDirectory(subdir);
     }));
 
-    return reconstructedDirectory;
+    return reconstructedDirectory; 
 }
-
-
-
 async function initializeDirectory(directory) {
     try {
         // Read the contents of the directory asynchronously
@@ -181,7 +183,6 @@ async function initializeDirectory(directory) {
 
     return directory;
 }
-
 function getMetadata(entity, stats, filePath) {
     const commonMetadata = {
         name: path.basename(filePath),
@@ -229,5 +230,4 @@ function getMetadata(entity, stats, filePath) {
 
     throw new Error("Unknown entity type");
 }
-
 app.whenReady().then(createMainWindow);

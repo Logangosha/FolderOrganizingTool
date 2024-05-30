@@ -3,6 +3,7 @@ const { getPath } = window.dialog;
 const { getDirectory } = window.getDirectory;
 const { basename } = window.path;
 const { generatePromptFromDirectory } = window.generatePromptFromDirectory;
+const { sendPromptToLLM } = window.sendPromptToLLM;
 
 // SELECT DIERECTORY
 async function selectDirectory() {
@@ -14,21 +15,93 @@ async function selectDirectory() {
         {
 
             console.log(selectedDirectoryPath)
-            const userConfirmation = await getUserConfirmationCorrectDirectory(selectedDirectoryPath)
-            if (userConfirmation) {
+            var userConfirmation = await getUserConfirmationCorrectDirectory(selectedDirectoryPath)
+            if (userConfirmation) 
+            {
                 // User confirmed the directory
                 console.log('User confirmed the directory:', selectedDirectoryPath);
                 var directory = await getDirectoryFromPath(selectedDirectoryPath);
                 displaySelectDirectoryForm()
                 // Proceed with initializing the directory or other actions
-                getPromptFromDirectory(directory)
-            } else {
+                const {prompt, directoryToJSON} = await getPromptFromDirectory(directory)
+                const response = await sendPromptToLLM(prompt)
+                userConfirmation = await getUserConfirmationAcceptDirectoryOrganization(directoryToJSON, response)
+                if(userConfirmation)
+                {
+                     // User did not confirm the directory
+                     console.log('User accepted the organized directory.');
+                     displaySelectDirectoryForm()
+                     // Handle the case when the directory is not confirmed
+                }
+                else
+                {
+                     // User did not confirm the directory
+                    console.log('User did not accept the organized directory.');
+                    displaySelectDirectoryForm()
+                    // Handle the case when the directory is not confirmed
+                }
+            } 
+            else 
+            {
                 // User did not confirm the directory
                 console.log('User did not confirm the directory.');
                 displaySelectDirectoryForm()
                 // Handle the case when the directory is not confirmed
             }
         }
+}
+
+async function getUserConfirmationAcceptDirectoryOrganization(directoryToJSON, response)
+{
+    // displayDifferencesInDirectories(directoryToJSON, response)
+    return new Promise((resolve) => {
+        const yesBtn = document.getElementById("userConfirmYesBtn");
+        const noBtn = document.getElementById("userConfirmNoBtn");
+        document.getElementById("selectDirectoryBtn").hidden = true;
+
+        yesBtn.hidden = false;
+        noBtn.hidden = false;
+
+        function handleYesClick() {
+            cleanup();
+            resolve(true);
+        }
+
+        function handleNoClick() {
+            cleanup();
+            resolve(false);
+        }
+
+        function cleanup() {
+            yesBtn.removeEventListener("click", handleYesClick);
+            noBtn.removeEventListener("click", handleNoClick);
+        }
+
+        
+        yesBtn.addEventListener("click", handleYesClick);
+        noBtn.addEventListener("click", handleNoClick);
+        displayDifferenceInDirectoriesConfirmationForm(directoryToJSON, response);
+    });
+}
+
+function formatJson(json) {
+
+}
+
+function displayDifferenceInDirectoriesConfirmationForm(unorganizedDirectoryJson, organizedDirectoryJson)
+{
+    // Get the pre elements for unorganized and organized data
+  const unorganizedPre = document.getElementById('unorganized-directory-container');
+  const organizedPre = document.getElementById('organized-directory-container');
+
+  // remove hidden class
+  console.log("removing hidden class")
+  unorganizedPre.classList.remove("hidden");
+  organizedPre.classList.remove("hidden");
+
+  // Set the formatted JSON strings as the content of the pre elements
+  unorganizedPre.textContent = unorganizedDirectoryJson;
+  organizedPre.textContent = organizedDirectoryJson;
 }
 
 // GET DIRECTORY OBJECT FROM PATH
@@ -43,6 +116,9 @@ function getUserConfirmationCorrectDirectory(selectedDirectoryPath) {
     return new Promise((resolve) => {
         const yesBtn = document.getElementById("userConfirmYesBtn");
         const noBtn = document.getElementById("userConfirmNoBtn");
+        document.getElementById("selectDirectoryBtn").hidden = true;
+        yesBtn.hidden = false;
+        noBtn.hidden = false;
 
         function handleYesClick() {
             cleanup();
@@ -72,8 +148,6 @@ function displayUserConfirmationForm(selectedDirectoryPath)
     document.getElementById("main-heading").innerHTML = "Are you sure you want to organize "+selectedDirectoryPath + "?";
     // change buttons
     document.getElementById("selectDirectoryBtn").hidden = true;
-    document.getElementById("userConfirmYesBtn").hidden = false;
-    document.getElementById("userConfirmNoBtn").hidden = false;
 }
 
 // DISPLAY SELECT DIRECTORY FORM
@@ -100,10 +174,13 @@ function selectDirectoryBtn_Click()
 
 async function getPromptFromDirectory(directory)
 {
-   var prompt = await generatePromptFromDirectory(directory)
-   console.log(prompt)
+   return await generatePromptFromDirectory(directory)
 }
 
+async function getResponseFromLLM(prompt)
+{
+    return await sendResponseToLLM(prompt)
+}
 
 // select a directory 
 //      // showOpenDialoge and get directory path

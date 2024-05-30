@@ -11,5 +11,8 @@
   "license": "MIT",
   "devDependencies": {
     "electron": "^30.0.6"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.11.5"
   }
 }

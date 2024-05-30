@@ -6,8 +6,38 @@
   <title>Hello World</title>
 </head>
 <body>
+  <style>
+      .container{
+        display: flex;
+      }
+      .directory-container {
+      /* Adjust width and height as needed */
+      width: fit-content;
+      height: 300px;
+      overflow: auto;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 10px;
+      }  
+      
+      .hidden {
+        display: none;
+      }
+  </style>
     <div style="background-color: bisque;">
         <h1 id="main-heading">Select a Directory to organize</h1>
+        <div class="container">
+          <div id="unorganized-directory-container" class="unorganized directory-container hidden">
+            <!--items go here-->
+            <div>TestDirectory</div>
+            <div>BackLog.docx</div>
+            <div> <!--add space somehow --> Documents</div>
+            <div> <!--add space somehow --> Document.txt</div>
+          </div>
+          <div id="organized-directory-container" class="organized directory-container hidden">
+            <!--items go here-->
+          </div>
+        </div>
         <button id="selectDirectoryBtn">Select Directory</button>
         <button id="userConfirmYesBtn" hidden>Yes</button>
         <button id="userConfirmNoBtn" hidden>No</button>

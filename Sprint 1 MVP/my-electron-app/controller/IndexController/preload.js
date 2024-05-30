@@ -13,3 +13,6 @@ contextBridge.exposeInMainWorld("getDirectory",{
 contextBridge.exposeInMainWorld("generatePromptFromDirectory",{
     generatePromptFromDirectory: (directory) => ipcRenderer.invoke('generatePromptFromDirectory',directory)
 });
+contextBridge.exposeInMainWorld("sendPromptToLLM",{
+    sendPromptToLLM: (prompt) => ipcRenderer.invoke('sendPromptToLLM',prompt)
+});
