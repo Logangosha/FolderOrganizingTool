@@ -32,35 +32,58 @@ class Directory {
     // }
     
     
-    // Main recursive function to convert directory structure to JSON
-    convertToJSON() {
-        const items = [];
+    // // Main recursive function to convert directory structure to JSON
+    // convertToJSON() {
+    //     const items = [];
     
-        // Process directory items
-        if (this.DirectoryItems.length > 0) {
-            this.DirectoryItems.forEach(item => {
-                const itemName = item.Metadata.name;
-                items.push(itemName); // Add each item directly to the list
-            });
-        }
+    //     // Process directory items
+    //     if (this.DirectoryItems.length > 0) {
+    //         this.DirectoryItems.forEach(item => {
+    //             const itemName = item.Metadata.name;
+    //             items.push(itemName); // Add each item directly to the list
+    //         });
+    //     }
     
-         // Process subdirectories
-        if (this.Subdirectories.length > 0) {
-            this.Subdirectories.forEach(subdir => {
-                const subdirObj = {};
-                subdirObj[subdir.Metadata.name] = subdir.convertToJSON();
-                items.push(subdirObj); // Add each subdirectory with its name to the list
-            });
-        }
-        return items;
-    }
+    //      // Process subdirectories
+    //     if (this.Subdirectories.length > 0) {
+    //         this.Subdirectories.forEach(subdir => {
+    //             const subdirObj = {};
+    //             subdirObj[subdir.Metadata.name] = subdir.convertToJSON();
+    //             items.push(subdirObj); // Add each subdirectory with its name to the list
+    //         });
+    //     }
+    //     return items;
+    // }
     
 
-    toJSON() {
-        return {
-            [this.Metadata.name]: this.convertToJSON()
-        };
-    }
+    // toJSON() {
+    //     return {
+    //         [this.Metadata.name]: this.convertToJSON()
+    //     };
+    // }
+
+        // Main recursive function to convert directory structure to JSON
+        convertToJSON() {
+            const result = {};
+    
+            // Process directory items
+            this.DirectoryItems.forEach(item => {
+                result[item.Metadata.name] = {}; // Each file is an empty object
+            });
+    
+            // Process subdirectories
+            this.Subdirectories.forEach(subdir => {
+                result[subdir.Metadata.name] = subdir.convertToJSON(); // Recursive call
+            });
+    
+            return result;
+        }
+    
+        toJSON() {
+            return {
+                [this.Metadata.name]: this.convertToJSON()
+            };
+        }
 }
 
 class Subdirectory extends Directory {
@@ -76,7 +99,7 @@ class DirectoryItem
         this.Metadata = null;
     }
     toJSON() {
-        return (this.Metadata.name + this.Metadata.extension);
+        return {};
     }
 }
 

@@ -4,9 +4,13 @@ const { getDirectory } = window.getDirectory;
 const { basename } = window.path;
 const { generatePromptFromDirectory } = window.generatePromptFromDirectory;
 const { sendPromptToLLM } = window.sendPromptToLLM;
+const { rebuildDirectory } = window.rebuildDirectory;
+
+// displaySelectDirectoryForm();
 
 // SELECT DIERECTORY
 async function selectDirectory() {
+    console.clear();
     const options = {
         properties: ['openDirectory']
     };
@@ -21,17 +25,21 @@ async function selectDirectory() {
                 // User confirmed the directory
                 console.log('User confirmed the directory:', selectedDirectoryPath);
                 var directory = await getDirectoryFromPath(selectedDirectoryPath);
-                displaySelectDirectoryForm()
+                // displaySelectDirectoryForm()
                 // Proceed with initializing the directory or other actions
                 const {prompt, directoryToJSON} = await getPromptFromDirectory(directory)
                 const response = await sendPromptToLLM(prompt)
                 userConfirmation = await getUserConfirmationAcceptDirectoryOrganization(directoryToJSON, response)
+                console.log(directoryToJSON)
+                console.log(response)
                 if(userConfirmation)
                 {
-                     // User did not confirm the directory
+                     // User did confirm the directory
                      console.log('User accepted the organized directory.');
+                     // Handle the case when the directory is confirmed
+                     organizeDirectory(directory, response);
+                     // display select directory form
                      displaySelectDirectoryForm()
-                     // Handle the case when the directory is not confirmed
                 }
                 else
                 {
@@ -49,6 +57,11 @@ async function selectDirectory() {
                 // Handle the case when the directory is not confirmed
             }
         }
+}
+
+async function organizeDirectory(directory, response)
+{
+    await rebuildDirectory(directory, JSON.parse(response));
 }
 
 async function getUserConfirmationAcceptDirectoryOrganization(directoryToJSON, response)
@@ -84,30 +97,50 @@ async function getUserConfirmationAcceptDirectoryOrganization(directoryToJSON, r
     });
 }
 
-function formatJson(json) {
 
-}
+function displayDifferenceInDirectoriesConfirmationForm(unorganizedDirectoryJson, organizedDirectoryJson) {
+    const unorganizedContainer = document.getElementById('unorganized-directory-container');
+    const organizedContainer = document.getElementById('organized-directory-container');
 
-function displayDifferenceInDirectoriesConfirmationForm(unorganizedDirectoryJson, organizedDirectoryJson)
-{
-    // Get the pre elements for unorganized and organized data
-  const unorganizedPre = document.getElementById('unorganized-directory-container');
-  const organizedPre = document.getElementById('organized-directory-container');
+    // Remove hidden class
+    unorganizedContainer.classList.remove("hidden");
+    organizedContainer.classList.remove("hidden");
+    document.querySelector(".container").classList.remove('hidden');
 
-  // remove hidden class
-  console.log("removing hidden class")
-  unorganizedPre.classList.remove("hidden");
-  organizedPre.classList.remove("hidden");
+    // change heading
+    document.getElementById("main-heading").innerHTML = "Do you accept the organized directory?";
 
-  // Set the formatted JSON strings as the content of the pre elements
-  unorganizedPre.textContent = unorganizedDirectoryJson;
-  organizedPre.textContent = organizedDirectoryJson;
+    // Clear previous content
+    unorganizedContainer.innerHTML = '';
+    organizedContainer.innerHTML = '';
+
+    // Function to create and append divs for each key in the JSON
+    function createDivsFromJson(json, parentElement) {
+        for (const key in json) {
+            if (json.hasOwnProperty(key)) {
+                const div = document.createElement('div');
+                div.style.marginLeft = '20px';
+
+                div.textContent = key;
+
+                parentElement.appendChild(div);
+
+                // Recursively create divs for nested objects
+                if (typeof json[key] === 'object' && json[key] !== null) {
+                    createDivsFromJson(json[key], div);
+                }
+            }
+        }
+    }
+
+    // Create and append divs for both JSON objects
+    createDivsFromJson(JSON.parse(unorganizedDirectoryJson), unorganizedContainer);
+    createDivsFromJson(JSON.parse(organizedDirectoryJson), organizedContainer);
 }
 
 // GET DIRECTORY OBJECT FROM PATH
 async function getDirectoryFromPath(directoryPath) {
     var directory = await getDirectory(directoryPath);
-    console.log(directory);
     return directory;
 }
 
@@ -159,6 +192,9 @@ function displaySelectDirectoryForm()
      document.getElementById("selectDirectoryBtn").hidden = false;
      document.getElementById("userConfirmYesBtn").hidden = true;
      document.getElementById("userConfirmNoBtn").hidden = true;
+     // hide directory container
+     document.querySelector(".container").classList.add('hidden');
+     
 }
 
 // Get the button element

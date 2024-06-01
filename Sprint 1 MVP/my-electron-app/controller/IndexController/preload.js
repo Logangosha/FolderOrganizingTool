@@ -16,3 +16,6 @@ contextBridge.exposeInMainWorld("generatePromptFromDirectory",{
 contextBridge.exposeInMainWorld("sendPromptToLLM",{
     sendPromptToLLM: (prompt) => ipcRenderer.invoke('sendPromptToLLM',prompt)
 });
+contextBridge.exposeInMainWorld("rebuildDirectory", {
+    rebuildDirectory: (directory, response) => ipcRenderer.invoke('rebuildDirectory', directory, response)
+});

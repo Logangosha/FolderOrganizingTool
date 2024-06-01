@@ -60,26 +60,246 @@ ipcMain.handle('generatePromptFromDirectory', async (event, dir) => {
     var prompt = "Please organize this directory JSON object. \n" +
                  "You may create new folders as necessary. \n" +
                  "Ensure each file is included only once; do not create or duplicate files. \n" +
-                 "Do not return any other text, only return a JSON object.\n" +
+                 "Do not rename the root directory. \n"+
+                 "Do not return any other text, only return a JSON object!!!\n" +
                  "Organize This Directory:\n";    
     // create json string
     var directoryToJSON = JSON.stringify(directory.toJSON(), null, 2);
     // add json string to prompt
     prompt += directoryToJSON;
+    // console.log(prompt);
     return {
         prompt,
         directoryToJSON,
       };
 })
 ipcMain.handle('sendPromptToLLM', async (event,prompt) => {
-    // const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash"});
-    // const result = await model.generateContent(prompt);
-    // const response = await result.response;
-    // const text = response.text();
-    const text = `{"TestDirectory": {"Documents": ["BackLog.docx", "Librarian Project.docx", "UseCaseDiagramTextualDescriptions.docx", "Librarian Goal Definitions.docx", "Initial Reasearch Sprint Step 1.docx"], "Diagrams": ["SystemFlowchartDiagram.drawio", "USECASEDIAGRAM.drawio"], "Diagrams - Backups": [".SystemFlowchartDiagram.drawio.bkp", ".USECASEDIAGRAM.drawio.bkp"], "Modeling": {"Class Diagrams": "ClassDiagrams.mdj", "Class Identification": "ClassIdentification.docx"}}}}`;
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash"});
+    const result = await model.generateContent(prompt);
+    const response = await result.response;
+    const text = response.text();
+    console.log("prompt")
+    console.log(text)
+//     const text = `
+// { 
+//     "Desktop": {
+//         "Applications": {
+//             "Arduino.lnk": {},
+//             "Audacity.lnk": {},
+//             "Battle.net.lnk": {},
+//             "Code Compare.lnk": {},
+//             "Docker Desktop.lnk": {},
+//             "draw.io.lnk": {},
+//             "CurseForge.lnk": {},
+//             "Electron Fiddle.lnk": {},
+//             "Firefox.lnk": {},
+//             "GitHub Desktop.lnk": {},
+//             "GNU Octave (CLI).lnk": {},
+//             "Google Chrome.lnk": {},
+//             "IBM SPSS Statistics.lnk": {},
+//             "LockDown Browser.lnk": {},
+//             "Microsoft Edge.lnk": {},
+//             "Microsoft SQL Server Management Studio 18.lnk": {},
+//             "Notepad++.lnk": {},
+//             "OBS Studio.lnk": {},
+//             "paint.net.lnk": {},
+//             "Power BI Desktop.lnk": {},
+//             "StarUML.lnk": {},
+//             "Steam.lnk": {},
+//             "TI-Nspire CX CAS Student Software.lnk": {},
+//             "Visual Studio 2022.lnk": {},
+//             "Visual Studio Code.lnk": {},
+//             "Vortex.lnk": {},
+//             "Word.lnk": {},
+//             "World of Warcraft.lnk": {}
+//         },
+//         "Games": {
+//             "minecraft.exe": {},
+//             "SkyrimTogether.exe - Shortcut.lnk": {},
+//             "Terraria.url": {},
+//             "The Elder Scrolls V Skyrim Special Edition.url": {},
+//             "mGBA.lnk": {},
+//             "Pokemon - Fire Red Version (U) (V1.1).gba - Shortcut.lnk": {}
+//         },
+//         "Scripts": {
+//             "ChessAppOnlineStatusCleanUp.bat": {},
+//             "ChessAppOnlineStatusCleanUp.exe": {},
+//             "CleanUp.php": {},
+//             "CleanUpOnlineStatus.php": {}
+//         },
+//         "Other": {
+//             "Excel.lnk": {},
+//             "Outlook.lnk": {},
+//             "New folder": {
+//                 "newfile.txt": {}
+//             }
+//         }
+//     }
+// }`;  
 
     return text;
 } )
+
+// Function to move files and create directories based on organizedDirectoryJson
+ipcMain.handle('rebuildDirectory', async (event, directoryObj, organizedDirectoryJson) => {
+    console.log("directory object:", directoryObj);
+    console.log("organized directory JSON:", organizedDirectoryJson);
+
+    // Helper function to move files
+    async function moveFile(oldPath, newPath) {
+        return new Promise((resolve, reject) => {
+            fs.rename(oldPath, newPath, (err) => {
+                if (err) reject(err);
+                else resolve();
+            });
+        });
+    }
+
+    // Helper function to move directories
+    async function moveDirectory(oldPath, newPath) {
+        return new Promise((resolve, reject) => {
+            fs.rename(oldPath, newPath, (err) => {
+                if (err) reject(err);
+                else resolve();
+            });
+        });
+    }
+
+    // Helper function to create directories
+    async function createDirectory(dirPath) {
+        return new Promise((resolve, reject) => {
+            fs.mkdir(dirPath, { recursive: true }, (err) => {
+                if (err) reject(err);
+                else resolve();
+            });
+        });
+    }
+
+        // Helper function to recursively find a subdirectory
+        function findSubdirectory(rootDirectory, name) {
+            if (rootDirectory.Metadata.name === name) {
+                return rootDirectory;
+            }
+            for (const subdir of rootDirectory.Subdirectories) {
+                const result = findSubdirectory(subdir, name);
+                if (result) {
+                    return result;
+                }
+            }
+            return null;
+        }
+    
+
+    // Helper function to check if the item is a directory item (file)
+    function isDirectoryItem(directory, key) {
+        // Check the current directory
+        if (directory.DirectoryItems.some(item => item.Metadata.name === key)) {
+            return true;
+        }
+        // Recursively check subdirectories
+        for (const subdir of directory.Subdirectories) {
+            if (isDirectoryItem(subdir, key)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // Helper function to find a directory item (file)
+    function findDirectoryItem(directory, key) {
+        // Check the current directory
+        const item = directory.DirectoryItems.find(item => item.Metadata.name === key);
+        if (item) {
+            return item;
+        }
+        // Recursively check subdirectories
+        for (const subdir of directory.Subdirectories) {
+            const result = findDirectoryItem(subdir, key);
+            if (result) {
+                return result;
+            }
+        }
+        return null;
+    }
+
+    // Recursive function to process the directory
+    async function processDirectory(currentDirectory, currentPath, organizedJson) {
+        for (const key in organizedJson) {
+            const newPath = path.join(currentPath, key);
+            const organizedItem = organizedJson[key];
+
+            if (!isDirectoryItem(directoryObj,key)) {
+                // It's a directory
+                const subdirectory = findSubdirectory(directoryObj, key);
+                if (subdirectory) {
+                    // Subdirectory exists, check if it needs to be moved
+                    const currentDirPath = subdirectory.Metadata.path;
+                    if (currentDirPath !== newPath) {
+                        console.log(`Moving directory from ${currentDirPath} to ${newPath}`);
+                        await moveDirectory(currentDirPath, newPath);
+                        try {
+                            await moveDirectory(currentDirPath, newPath);
+                        } catch (err) {
+                            console.error(`Error moving directory from ${currentDirPath} to ${newPath}:`, err);
+                        }
+                    }
+                    // Recursively process it
+                    await processDirectory(subdirectory, newPath, organizedItem);
+                } else {
+                    // Subdirectory doesn't exist, create it
+                    console.log(`Creating directory: ${newPath}`);
+                    await createDirectory(newPath);
+                    await processDirectory({ Subdirectories: [], DirectoryItems: [] }, newPath, organizedItem);
+                }
+            } else {
+                // It's a file
+                const directoryItem = findDirectoryItem(directoryObj, key);
+                if (directoryItem) {
+                    const currentFilePath = directoryItem.Metadata.path;
+                    if (currentFilePath !== newPath) {
+                        console.log(`Moving file from ${currentFilePath} to ${newPath}`);
+                        try {
+                            await moveFile(currentFilePath, newPath);
+                        } catch (err) {
+                            console.error(`Error moving file from ${currentFilePath} to ${newPath}:`, err);
+                        }
+                    }
+                } else {
+                    console.log(`File ${key} not found in current directory items`);
+                }
+            }
+        }
+    }
+
+        // Helper function to recursively delete empty directories
+        async function deleteEmptyDirectories(directoryPath) {
+            const files = await fs.promises.readdir(directoryPath);
+            if (files.length === 0) {
+                await fs.promises.rmdir(directoryPath);
+                console.log(`Deleted empty directory: ${directoryPath}`);
+            } else {
+                for (const file of files) {
+                    const fullPath = path.join(directoryPath, file);
+                    const stat = await fs.promises.stat(fullPath);
+                    if (stat.isDirectory()) {
+                        await deleteEmptyDirectories(fullPath);
+                    }
+                }
+                // Re-check the directory after deleting subdirectories
+                const remainingFiles = await fs.promises.readdir(directoryPath);
+                if (remainingFiles.length === 0) {
+                    await fs.promises.rmdir(directoryPath);
+                    console.log(`Deleted empty directory: ${directoryPath}`);
+                }
+            }
+        }
+
+    // Start processing from the root directory
+    await processDirectory(directoryObj, directoryObj.Metadata.path, organizedDirectoryJson[directoryObj.Metadata.name]);
+
+        // Delete empty directories starting from the root directory
+        await deleteEmptyDirectories(directoryObj.Metadata.path);
+});
 async function reconstructDirectory(dir) {
     let reconstructedDirectory = new Directory();
 
