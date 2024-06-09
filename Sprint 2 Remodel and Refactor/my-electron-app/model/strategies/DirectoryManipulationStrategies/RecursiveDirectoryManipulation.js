@@ -77,7 +77,11 @@ class RecursiveDirectoryManipulation extends DirectoryManipulationStrategy {
                 if (item) return item;
 
                 // RECURSIVELY CHECK SUBDIRECTORIES
-                for (const subdir of directory.Subdirectories) if (findDirectoryItem(subdir, key)) return result;
+                for (const subdir of directory.Subdirectories) 
+                    {
+                        let result = findDirectoryItem(subdir, key)
+                        if (result) return result;
+                    }
 
                 // ITEM NOT FOUND
                 return null;

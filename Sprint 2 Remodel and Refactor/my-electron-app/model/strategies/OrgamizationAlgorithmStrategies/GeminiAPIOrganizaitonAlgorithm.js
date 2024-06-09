@@ -84,8 +84,11 @@ class GeminiAPIOrganizaitonAlgorithm  extends OrganizationAlgorithmStrategy {
     async generatePromptFromDirectory(originalDirectoryJSON) {
         var prompt = "Please organize this directory JSON object. \n" +
         "You may create new folders as necessary. \n" +
+        "You may move files into new or existing folders. \n" +
+        "You may move files from one folder to another. \n" +
         "Ensure each file is included only once; do not create or duplicate files. \n" +
         "Do not rename the root directory. \n"+
+        "Ensure each file is placed in the most suitable folder. If a file is currently in an inappropriate folder, move it to a more appropriate one. \n"+
         "Do not return any other text, only return a JSON object!!!\n" +
         "Organize This Directory:\n"; 
         // CREATE JSON STRING 
