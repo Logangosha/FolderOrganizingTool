@@ -1,5 +1,5 @@
 // DEPNDENCIES:
-const { app, BrowserWindow, ipcMain, dialog } = require("electron");
+const { app, BrowserWindow, ipcMain} = require("electron");
 const path = require("path");
 const url = require("url");
 const { DirectorySelector } = require('../controller/state_controllers/DirectorySelectionStateController'); 
@@ -65,7 +65,9 @@ function createMainWindow()
     function setState(newState, args = null)
     {
         console.log(`Setting state to ${newState}`);
+        // SET CURRENT STATE
         currentState = newState;
+        // NOTIFY RENDERER
         mainWindow.webContents.send('state-changed', newState, args);
     }
     
@@ -87,14 +89,19 @@ function createMainWindow()
     // SELECT DIRECTORY HANDLER
     ipcMain.handle('select-directory', async () => {
         console.log(`Selecting directory`);
-        try{
+        try
+        {
+            // CREATE DIRECTORY SELECTOR
             const directorySelector = new DirectorySelector();
+            // SELECT DIRECTORY PATH
             let selectedDirectoryPath = await directorySelector.selectDirectoryPath(defaultStrategies.getDirectoryPathStrategy);
             console.log("Selected Directory Path: "+selectedDirectoryPath);
+            // SET STATE TO DIRECTORY CONFIRMATION
             setState(State.DIRECTORY_CONFIRMATION, selectedDirectoryPath);
         }
         catch(e)
         {
+            // SET STATE TO SUCCESS FAIL NOTIFICATION
             setState(State.SUCCESS_FAIL_NOTIFICATION, e.message);
         }
         
@@ -109,19 +116,23 @@ function createMainWindow()
     // EXECUTE ORGANIZATION ALGORITHM HANDLER
     // REQUIRES 3 ARGUMENTS: selectDirectoryPath, organizationAlgorithm , getDirectoryFromPathStrategy
     ipcMain.handle('execute-organization-algorithm', async (events, selectedDirectoryPath) => {
-        try {
-
+        try 
+        {
+            // CREATE EXECUTOR
             const executor = new OrganizationAlgorithmExecutor(
                 selectedDirectoryPath,
                 defaultStrategies.organizationAlgorithmStrategy,
                 defaultStrategies.getDirectoryFromPathStrategy
             );
+            // EXECUTE ORGANIZATION ALGORITHM
             let response = await executor.execute();
             console.log(`Organization Algorithm executed`);
+            // SET STATE TO CHANGE APPROVAL
             setState(State.CHANGE_APPROVAL, response);
         }
         catch(e)
         {
+            // SET STATE TO SUCCESS FAIL NOTIFICATION
             setState(State.SUCCESS_FAIL_NOTIFICATION, e.message);
         }
     });
@@ -132,12 +143,16 @@ function createMainWindow()
     ipcMain.handle('perform-directory-manipulation', async (events, organizationAlgorithmResponse) => {
         console.log(`Performing Organization`);
         try{
+            // CREATE DIRECTORY MANIPULATION PERFORMER
             let directoryManipulationPerformer = new DirectoryManipulationPerformer();
+            // PERFORM DIRECTORY MANIPULATION
             let result = await directoryManipulationPerformer.performDirectoryManipulation(organizationAlgorithmResponse, defaultStrategies.directoryManipulationStrategy);
+            // SET STATE TO SUCCESS FAIL NOTIFICATION
             setState(State.SUCCESS_FAIL_NOTIFICATION, result);
         }
         catch(e)
         {
+            // SET STATE TO SUCCESS FAIL NOTIFICATION
             setState(State.SUCCESS_FAIL_NOTIFICATION, e.message);
         }
     });

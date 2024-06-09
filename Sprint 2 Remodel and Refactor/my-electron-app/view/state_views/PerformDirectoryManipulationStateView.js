@@ -1,5 +1,7 @@
+// DEPENDENCIES
 const { ipcRenderer } = require('electron');
 
+// FUNCTION TO LOAD PERFORM DIRECTORY MANIPULATION STATE VIEW
   function loadPerformDirectoryManipulationStateView(organizationAlgorithmResponse) {
     console.log("Loading Perform Directory Manipulation State View...");
     console.log("organizationAlgorithmResponse.originalDirectoryJSON: ", organizationAlgorithmResponse.originalDirectoryJSON)
@@ -17,6 +19,7 @@ const { ipcRenderer } = require('electron');
     </div>
   `;
 
+  // PERFORM DIRECTORY MANIPULATION
   ipcRenderer.invoke('perform-directory-manipulation', organizationAlgorithmResponse);
 }
 

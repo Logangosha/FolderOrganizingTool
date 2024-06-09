@@ -5,7 +5,7 @@ class Directory {
         this.Metadata = directoryMetadata;
     }
     
-    // Method to add a subdirectory
+    // METHOD TO ADD A SUBDIRECTORY
     addSubdirectory(subdirectory) {
         if (subdirectory instanceof Subdirectory) {
             this.Subdirectories.push(subdirectory);
@@ -14,7 +14,7 @@ class Directory {
         }
     }
 
-    // Method to add a directory item
+    // METHOD TO ADD A DIRECTORY ITEM
     addDirectoryItem(directoryItem) {
         if (directoryItem instanceof DirectoryItem) {
             this.DirectoryItems.push(directoryItem);
@@ -23,18 +23,18 @@ class Directory {
         }
     }
 
-    // Main recursive function to convert directory structure to JSON
+    // MAIN RECURSIVE FUNCTION TO CONVERT DIRECTORY STRUCTURE TO JSON
     convertToJSON() {
         const result = {};
 
-        // Process directory items
+        // PROCESS DIRECTORY ITEMS
         this.DirectoryItems.forEach(item => {
-            result[item.Metadata.name] = {}; // Each file is an empty object
+            result[item.Metadata.name] = {}; 
         });
 
-        // Process subdirectories
+        // PROCESS SUBDIRECTORIES
         this.Subdirectories.forEach(subdir => {
-            result[subdir.Metadata.name] = subdir.convertToJSON(); // Recursive call
+            result[subdir.Metadata.name] = subdir.convertToJSON(); 
         });
 
         return result;
@@ -48,6 +48,7 @@ class Directory {
 }
 
 class Subdirectory extends Directory {
+    // CONSTRUCTOR
     constructor(directoryItems = [], subdirectories = [], directoryMetadata = null) {
         super(directoryItems, subdirectories, directoryMetadata);
     }
@@ -55,16 +56,18 @@ class Subdirectory extends Directory {
 
 class DirectoryItem 
 {
+    // CONSTRUCTOR
     constructor()
     {
         this.Metadata = null;
     }
+    // METHOD TO CONVERT DIRECTORY ITEM TO JSON
     toJSON() {
         return {};
     }
 }
 
-// Base class for Metadata
+// BASE METADATA CLASS
 class Metadata {
     constructor(name = null, path = null, creationTime = null, lastAccessTime = null, lastModifiedTime = null, size = null, permissions = null, owner = null, parentDirectory = null) {
         this.name = name;
@@ -79,7 +82,7 @@ class Metadata {
     }
 }
 
-// Directory Metadata extends Metadata
+// DIRECTORY METADATA CLASS
 class DirectoryMetadata extends Metadata {
     constructor(name = null, path = null, creationTime = null, lastAccessTime = null, lastModifiedTime = null, size = null, permissions = null, owner = null, parentDirectory = null, directoryItemCount = 0, subdirectoryCount = 0, directoryItemsExtensions = []) {
         super(name, path, creationTime, lastAccessTime, lastModifiedTime, size, permissions, owner, parentDirectory);
@@ -89,7 +92,7 @@ class DirectoryMetadata extends Metadata {
     }
 }
 
-// Directory Item Metadata extends Metadata
+// DIRECTORY ITEM METADATA CLASS
 class DirectoryItemMetadata extends Metadata {
     constructor(name = null, path = null, creationTime = null, lastAccessTime = null, lastModifiedTime = null, size = null, permissions = null, owner = null, parentDirectory = null, extension = null) {
         super(name, path, creationTime, lastAccessTime, lastModifiedTime, size, permissions, owner, parentDirectory);

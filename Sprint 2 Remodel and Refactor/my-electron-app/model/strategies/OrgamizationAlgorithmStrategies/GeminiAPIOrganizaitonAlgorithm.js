@@ -1,20 +1,23 @@
 
-
+// DEPENDENCIES
 const { GoogleGenerativeAI } = require("@google/generative-ai");
-const API_KEY = "AIzaSyBhrHB3uJygVJcbXXhPaZKI5xlFM6TTkWE";
 const genAI = new GoogleGenerativeAI(API_KEY);
 const {OrganizationAlgorithmStrategy} = require('./OrganizationAlrorithmStrategy');
+// API KEY
+const API_KEY = "AIzaSyBhrHB3uJygVJcbXXhPaZKI5xlFM6TTkWE";
 
 class GeminiAPIOrganizaitonAlgorithm  extends OrganizationAlgorithmStrategy {
+    // CONSTRUCTOR
     async organize(originalDirectoryJSON) {
         console.log("Gemini API Organization Algorithm is being executed...");
         this.organizedDirectoryJSON = await this.getOrganizedDirectoryFromGeminiAPI(originalDirectoryJSON);
         return this.getResponse(); 
     }
+    // GET RESPONSE
     async getOrganizedDirectoryFromGeminiAPI(originalDirectoryJSON) {
-        // generate prompt from directory
+        // GENERATE PROMPT FROM DIRECTORY
         var prompt = await this.generatePromptFromDirectory(originalDirectoryJSON);
-        // sent prompt to Gemini API
+        // SENT PROMPT TO GEMINI API
         const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash"});
         const result = await model.generateContent(prompt);
         const response = await result.response;
@@ -76,16 +79,18 @@ class GeminiAPIOrganizaitonAlgorithm  extends OrganizationAlgorithmStrategy {
             // }`;  
         return organizedDirectory;
     }
+
+    // GENERATE PROMPT FROM DIRECTORY
     async generatePromptFromDirectory(originalDirectoryJSON) {
         var prompt = "Please organize this directory JSON object. \n" +
         "You may create new folders as necessary. \n" +
         "Ensure each file is included only once; do not create or duplicate files. \n" +
         "Do not rename the root directory. \n"+
         "Do not return any other text, only return a JSON object!!!\n" +
-        "Organize This Directory:\n";    
-        // create json string
+        "Organize This Directory:\n"; 
+        // CREATE JSON STRING 
         var directoryToJSON = JSON.stringify(originalDirectoryJSON, null, 2);
-        // add json string to prompt
+        // ADD JSON STRING TO PROMPT
         prompt += directoryToJSON;
         return prompt;
     }    

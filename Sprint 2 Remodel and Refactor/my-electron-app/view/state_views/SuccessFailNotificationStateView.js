@@ -1,5 +1,7 @@
+// DEPENDENCIES
 const { ipcRenderer } = require('electron');
 
+// FUNCTION TO LOAD SUCCESS FAIL NOTIFICATION STATE VIEW
 function loadSuccessFailNotificationStateView(result) {
     console.log("Loading Success Fail Notificaiton State View...");
     document.getElementById('content').innerHTML = `
@@ -7,6 +9,7 @@ function loadSuccessFailNotificationStateView(result) {
     <h2>${result}</h2>
     <button id="ok-btn">OK</button>
   `;
+  // OK BUTTON EVENT LISTENER
   document.getElementById("ok-btn").addEventListener('click', async () => {
     ipcRenderer.invoke('transition-to-directory-selection-state');
   });

@@ -1,5 +1,7 @@
+// DEPENDENCIES
 const { ipcRenderer } = require('electron');
 
+// FUNCTION TO LOAD DIRECTORY CONFIRMATION STATE VIEW
 function loadDirectoryConfirmationStateView(selectDirectoryPath) {
     console.log("Loading Directory Confirmation State View...");
     console.log("Selected Directory Path: " + selectDirectoryPath);
@@ -10,10 +12,12 @@ function loadDirectoryConfirmationStateView(selectDirectoryPath) {
     <button id="no-btn">No</button>
   `;
 
+  // YES BUTTON EVENT LISTENER
   document.getElementById("yes-btn").addEventListener('click', async () => {
     ipcRenderer.invoke('transition-to-execute-organization-algorithm-state', selectDirectoryPath);
   });
 
+  // NO BUTTON EVENT LISTENER
   document.getElementById("no-btn").addEventListener('click', async () => {
     ipcRenderer.invoke('transition-to-directory-selection-state');
   });

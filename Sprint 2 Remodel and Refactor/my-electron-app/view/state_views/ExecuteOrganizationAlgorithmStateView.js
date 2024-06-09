@@ -1,5 +1,7 @@
+// DEPENDENCIES
 const { ipcRenderer } = require('electron');
 
+// FUNCTION TO LOAD EXECUTE ORGANIZATION ALGORITHM STATE VIEW
 function loadExecuteOrganizationAlgorithmStateView(selectedDirectoryPath) {
     console.log("Loading Execute Organization Algorithm State View...");
     document.getElementById('content').innerHTML = `
@@ -14,6 +16,7 @@ function loadExecuteOrganizationAlgorithmStateView(selectedDirectoryPath) {
       <img id="loading-gif" src="../media/gifs/loading.gif" alt="Loading..." />
     </div>
   `;
+  // EXECUTE ORGANIZATION ALGORITHM
   ipcRenderer.invoke('execute-organization-algorithm', selectedDirectoryPath);
 }
 module.exports = {

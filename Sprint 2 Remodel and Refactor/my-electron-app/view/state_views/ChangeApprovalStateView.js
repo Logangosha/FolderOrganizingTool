@@ -1,5 +1,7 @@
+// DEPENDENCIES
 const { ipcRenderer } = require('electron');
 
+// FUNCTION TO LOAD CHANGE APPROVAL STATE VIEW
 function loadChangeApprovalStateView(organizationAlgorithmResponse) {
     console.log("Loading Change Approval State View...");
     console.log("organizationAlgorithmResponse.originalDirectoryJSON: ", organizationAlgorithmResponse.originalDirectoryJSON)
@@ -41,7 +43,7 @@ function loadChangeApprovalStateView(organizationAlgorithmResponse) {
     const unorganizedContainer = document.getElementById('unorganized-directory-container');
     const organizedContainer = document.getElementById('organized-directory-container');
 
-    // Function to create and append divs for each key in the JSON
+    // FUNCTION TO CREATE AND APPEND DIVS FOR EACH KEY IN THE JSON
       function createDivsFromJson(json, parentElement) {
         for (const key in json) {
             if (json.hasOwnProperty(key)) {
@@ -52,7 +54,7 @@ function loadChangeApprovalStateView(organizationAlgorithmResponse) {
 
                 parentElement.appendChild(div);
 
-                // Recursively create divs for nested objects
+                // RECURSIVELY CREATE DIVS FOR NESTED OBJECTS
                 if (typeof json[key] === 'object' && json[key] !== null) {
                     createDivsFromJson(json[key], div);
                 }
@@ -60,7 +62,7 @@ function loadChangeApprovalStateView(organizationAlgorithmResponse) {
         }
     }
   
-    // Create and append divs for both JSON objects
+    // CREATE AND APPEND DIVS FOR BOTH JSON OBJECTS
     createDivsFromJson(JSON.parse(JSON.stringify(organizationAlgorithmResponse.originalDirectoryJSON, null, 2)), unorganizedContainer);
     createDivsFromJson(JSON.parse(organizationAlgorithmResponse.organizedDirectoryJSON), organizedContainer);
 

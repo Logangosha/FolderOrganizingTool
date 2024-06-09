@@ -1,3 +1,4 @@
+// DEPENDENCIES
 const { Directory, Subdirectory, DirectoryItem, DirectoryMetadata, DirectoryItemMetadata }  = require("../../FileSystemEntities");
 const { GetDirectoryFromPathStrategy} = require("./GetDirectoryFromPathStrategy");
 const path = require("path");
@@ -5,69 +6,73 @@ const fs = require("fs");
 
 class GetDirectoryRecursivelyFromPath extends GetDirectoryFromPathStrategy
 {
-     // method to initialize a directory object's metadata and contents
-     async initializeDirectory(directory) {
+    // METHOD TO INITIALIZE A DIRECTORY OBJECT'S METADATA AND CONTENTS
+    async initializeDirectory(directory) {
         try {
-            // Read the contents of the directory asynchronously
+            // READ THE CONTENTS OF THE DIRECTORY ASYNCHRONOUSLY
+            // GET STATS / INFORMATION ABOUT THE DIRECTORY ASYNCHRONOUSLY
             var dirStats = await fs.promises.stat(directory.Metadata.path);
+            // ADD METADATA ATTRIBUTES
             directory.Metadata = this.getMetadata(directory, dirStats,directory.Metadata.path)
+            // GET FILES IN DIRECTORY
             const files = await fs.promises.readdir(directory.Metadata.path);
 
-            // Initialize the directory size
+            // INITIALIZE THE DIRECTORY SIZE
             let directorySize = 0;
 
-            // Iterate through each file in the directory
+            // ITERATE THROUGH EACH FILE IN THE DIRECTORY
             await Promise.all(files.map(async (file) => {
-                // Create the path for the file
+                // CREATE THE FILE PATH
                 const filePath = path.join(directory.Metadata.path, file);
-                // Get stats / information about the file asynchronously
+                // GET STATS / INFORMATION ABOUT THE FILE ASYNCHRONOUSLY
                 const stats = await fs.promises.stat(filePath);
 
-                // If it's a directory
+                // IF IT IS A DIRECTORY
                 if (stats.isDirectory()) {
-                    // Create a new subdirectory object
+                    // CREATE NEW SUBDIRECTORY
                     var subdirectory = new Subdirectory();
-                    // Add metadata attributes
-                    subdirectory.Metadata = this.getMetadata(subdirectory, stats, filePath);                
-                    // Add subdirectory to the current directory
+                    // ADD METADATA ATTRIBUTES
+                    subdirectory.Metadata = this.getMetadata(subdirectory, stats, filePath);
+                    // ADD SUBDIRECTORY TO DIRECTORY
                     subdirectory = await this.initializeDirectory(subdirectory);
                     directory.addSubdirectory(subdirectory);
 
-                    // Accumulate the size of the subdirectory
+                    // ACCUMULATE THE SIZE OF THE SUBDIRECTORY
                     directorySize += subdirectory.Metadata.size;
                 }
-                // If it's a file
+                // IF IT IS A FILE
                 else if (stats.isFile()) {
-                    // Create a new directory item object
+                    // CREATE A NEW DIRECTORY ITEM
                     const directoryItem = new DirectoryItem();
-                    // Add metadata attributes
+                    // ADD METADATA ATTRIBUTES
                     directoryItem.Metadata = this.getMetadata(directoryItem, stats, filePath);
-                    // Add item to the current directory
+                    // ADD ITEM TO CURRENT DIRECTORY
                     directory.addDirectoryItem(directoryItem);
 
-                    // Accumulate the size of the file
+                    // ACCUMULATE THE SIZE OF THE FILE
                     directorySize += stats.size;
 
-                    // add unique extensions to directory metadata
+                    // ADD UNIQUE EXTENSIONS TO DIRECTORY METADATA
                     if(!directory.Metadata.directoryItemsExtensions.includes(path.extname(filePath)))
                         directory.Metadata.directoryItemsExtensions.push(path.extname(filePath))
                 }
             }));
-            // add additional directory metadata
+            // ADD ADDITIONAL DIRECTORY METADATA
             directory.Metadata.directoryItemCount = directory.DirectoryItems.length;
             directory.Metadata.subdirectoryCount = directory.Subdirectories.length;
             directory.Metadata.size = directorySize;
-
-
-        } catch (err) {
+        } 
+        catch (err) 
+        {
             console.error('Error initializing directory:', err);
         }
 
         return directory;
     }
 
-    // method to get metadata for a given entity
+    // METHOD TO GET METADATA FOR A GIVEN ENTITY
     getMetadata(entity, stats, filePath) {
+        // COMMON METADATA
         const commonMetadata = {
             name: path.basename(filePath),
             path: filePath,
@@ -80,6 +85,7 @@ class GetDirectoryRecursivelyFromPath extends GetDirectoryFromPathStrategy
             parentDirectory: path.basename(path.dirname(filePath))
         };
 
+        // 
         if (entity instanceof Directory || entity instanceof Subdirectory) {
             return new DirectoryMetadata(
                 commonMetadata.name,
@@ -91,11 +97,11 @@ class GetDirectoryRecursivelyFromPath extends GetDirectoryFromPathStrategy
                 commonMetadata.permissions,
                 commonMetadata.owner,
                 commonMetadata.parentDirectory,
-                0, // directory items
-                0, // subdirectory count
-                [] // directory items extentions
+                // ADDITIONAL DIRECTORY METADATA
+                0, // DIRECTORY ITEMS 
+                0, // SUBDIRECTORY COUNT
+                [] // DIRECTORY ITEMS EXTENSIONS
             );
-            //    constructor( directoryItemCount = 0, subdirectoryCount = 0, directoryItemsExtensions = []) {
 
         } else if (entity instanceof DirectoryItem) {
             return new DirectoryItemMetadata(
@@ -108,26 +114,29 @@ class GetDirectoryRecursivelyFromPath extends GetDirectoryFromPathStrategy
                 commonMetadata.permissions,
                 commonMetadata.owner,
                 commonMetadata.parentDirectory,
-                path.extname(filePath)
+                // ADDITIONAL DIRECTORY ITEM METADATA
+                path.extname(filePath) // EXTENSION
             );
         }
 
         throw new Error("Unknown entity type");
     }
-    // method to return a directory object from a given path
+
+    // METHOD TO RETURN A DIRECTORY OBJECT FROM A GIVEN PATH
     async getDirectoryFromPath(directoryPath) {
-        // // create new directory 
+
+        // CREATE NEW DIRECTORY
         var directory = new Directory();
 
-        // // create metadata object for new directory
+        // CREATE METADATA OBJECT FOR NEW DIRECTORY
         var directoryMetadata = new DirectoryMetadata();
         directoryMetadata.name = path.basename(directoryPath);
         directoryMetadata.path = directoryPath;
 
-        // // add metadata to directory
+        // ADD METADATA TO DIRECTORY
         directory.Metadata = directoryMetadata;
 
-        // // initialize the directory 
+        // INITIALIZE DIRECTORY
         directory = await this.initializeDirectory(directory);
         this.directoryObject = directory;
         this.directoryJSONObject = directory.toJSON();

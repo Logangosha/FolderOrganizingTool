@@ -1,6 +1,6 @@
 // EXECUTE ORGANIZATION ALGORITHM STATE BACKEND MODULE
-
 class OrganizationAlgorithmExecutor {
+    // CONSTRUCTOR
     constructor(selectDirectoryPath, organizationAlgorithm, getDirectoryFromPathStrategy){
         this.selectedDirectoryPath = selectDirectoryPath;
         this.getDirectoryFromPathStrategy = getDirectoryFromPathStrategy;
@@ -10,11 +10,15 @@ class OrganizationAlgorithmExecutor {
         this.organizedDirectoryJSON = null;
     }
 
+    // EXECUTE
     async execute(){
+        // GET DIRECTORY FROM PATH
         let response = await this.getDirectoryFromPathStrategy.getDirectoryFromPath(this.selectedDirectoryPath);
         this.originalDirectoryObject = response.directoryObject;
         this.originalDirectoryJSON = response.directoryJSONObject;
+        // ORGANIZE DIRECTORY
         this.organizedDirectoryJSON = await this.organizationAlgorithm.organize(this.originalDirectoryJSON);
+        // RETURN RESPONSE
         return this.getResponse();
     }
 
