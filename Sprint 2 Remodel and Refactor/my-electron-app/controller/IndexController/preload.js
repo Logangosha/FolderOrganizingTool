@@ -1,21 +1,21 @@
+// DEPENDENCIES
 const { contextBridge, ipcRenderer } = require('electron');
+const { loadDirectorySelectionStateView } = require('../../view/state_views/DirectorySelectionStateView');
+const { loadChangeApprovalStateView } = require('../../view/state_views/ChangeApprovalStateView')
+const { loadDirectoryConfirmationStateView } = require('../../view/state_views/DirectoryConfirmationStateView')
+const { loadExecuteOrganizationAlgorithmStateView } = require('../../view/state_views/ExecuteOrganizationAlgorithmStateView')
+const { loadPerformDirectoryManipulationStateView } = require('../../view/state_views/PerformDirectoryManipulationStateView')
+const { loadSuccessFailNotificationStateView } = require('../../view/state_views/SuccessFailNotificationStateView')
 
-
-contextBridge.exposeInMainWorld("path", {
-    basename: (folertPath) => ipcRenderer.invoke("path-basename", folertPath)
-});
-contextBridge.exposeInMainWorld('dialog', {
-    getPath: (options) => ipcRenderer.invoke('getPath', options)
-});
-contextBridge.exposeInMainWorld("getDirectory",{
-    getDirectory: (directoryPath) => ipcRenderer.invoke('getDirectory',directoryPath)
-});
-contextBridge.exposeInMainWorld("generatePromptFromDirectory",{
-    generatePromptFromDirectory: (directory) => ipcRenderer.invoke('generatePromptFromDirectory',directory)
-});
-contextBridge.exposeInMainWorld("sendPromptToLLM",{
-    sendPromptToLLM: (prompt) => ipcRenderer.invoke('sendPromptToLLM',prompt)
-});
-contextBridge.exposeInMainWorld("rebuildDirectory", {
-    rebuildDirectory: (directory, response) => ipcRenderer.invoke('rebuildDirectory', directory, response)
+// ITEMS TO EXPOSE TO RENDERER PROCESS
+// EXPOSE stateManager OBJECT TO RENDERER PROCESS
+contextBridge.exposeInMainWorld('stateManager', {
+    getCurrentState: () => { return ipcRenderer.invoke('get-current-state')},
+    onStateChange: (listener) => ipcRenderer.on('state-changed', listener),
+    loadDirectorySelectionStateView: () => loadDirectorySelectionStateView(), 
+    loadChangeApprovalStateView: (OrganizationAlgorithmResponse) => loadChangeApprovalStateView(OrganizationAlgorithmResponse),
+    loadDirectoryConfirmationStateView: (selectedDirectoryPath) => loadDirectoryConfirmationStateView(selectedDirectoryPath),
+    loadExecuteOrganizationAlgorithmStateView: (selectedDirectoryPath) => loadExecuteOrganizationAlgorithmStateView(selectedDirectoryPath),
+    loadPerformOrganizationStateView: (organizationAlgorithmResponse) => loadPerformDirectoryManipulationStateView(organizationAlgorithmResponse),
+    loadSuccessFailNotificationStateView: (result) => loadSuccessFailNotificationStateView(result)
 });

@@ -23,67 +23,28 @@ class Directory {
         }
     }
 
-    // toJSON() {
-    //     return {
-    //         DirectoryName: this.Metadata.name,
-    //         DirectoryItems: this.DirectoryItems.map(item => item.toJSON()),
-    //         Subdirectories: this.Subdirectories.map(subdir => subdir.toJSON())
-    //     };
-    // }
-    
-    
-    // // Main recursive function to convert directory structure to JSON
-    // convertToJSON() {
-    //     const items = [];
-    
-    //     // Process directory items
-    //     if (this.DirectoryItems.length > 0) {
-    //         this.DirectoryItems.forEach(item => {
-    //             const itemName = item.Metadata.name;
-    //             items.push(itemName); // Add each item directly to the list
-    //         });
-    //     }
-    
-    //      // Process subdirectories
-    //     if (this.Subdirectories.length > 0) {
-    //         this.Subdirectories.forEach(subdir => {
-    //             const subdirObj = {};
-    //             subdirObj[subdir.Metadata.name] = subdir.convertToJSON();
-    //             items.push(subdirObj); // Add each subdirectory with its name to the list
-    //         });
-    //     }
-    //     return items;
-    // }
-    
+    // Main recursive function to convert directory structure to JSON
+    convertToJSON() {
+        const result = {};
 
-    // toJSON() {
-    //     return {
-    //         [this.Metadata.name]: this.convertToJSON()
-    //     };
-    // }
+        // Process directory items
+        this.DirectoryItems.forEach(item => {
+            result[item.Metadata.name] = {}; // Each file is an empty object
+        });
 
-        // Main recursive function to convert directory structure to JSON
-        convertToJSON() {
-            const result = {};
-    
-            // Process directory items
-            this.DirectoryItems.forEach(item => {
-                result[item.Metadata.name] = {}; // Each file is an empty object
-            });
-    
-            // Process subdirectories
-            this.Subdirectories.forEach(subdir => {
-                result[subdir.Metadata.name] = subdir.convertToJSON(); // Recursive call
-            });
-    
-            return result;
-        }
-    
-        toJSON() {
-            return {
-                [this.Metadata.name]: this.convertToJSON()
-            };
-        }
+        // Process subdirectories
+        this.Subdirectories.forEach(subdir => {
+            result[subdir.Metadata.name] = subdir.convertToJSON(); // Recursive call
+        });
+
+        return result;
+    }
+
+    toJSON() {
+        return {
+            [this.Metadata.name]: this.convertToJSON()
+        };
+    }
 }
 
 class Subdirectory extends Directory {
@@ -142,5 +103,5 @@ module.exports = {
     Subdirectory,
     DirectoryItem,
     DirectoryMetadata,
-    DirectoryItemMetadata
+    DirectoryItemMetadata,
 };
