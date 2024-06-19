@@ -7,7 +7,7 @@ const { OrganizationAlgorithmExecutor } = require("../controller/state_controlle
 const { DirectoryManipulationPerformer } = require("./state_controllers/PerformDirectoryManipulationStateController.js");
 
 //  APP STRATEGIES
-const { NonRecursiveStrategy } = require("../model/strategies/BaseStrategies/NonRecursiveStrategy.js");
+const { NonRecursiveStrategy } = require("../model/strategies/OrganizationStrategies/NonRecursiveStrategy.js");
 // Replace the above import with the following import to use the RecursiveStrategy:
 // const { RecursiveStrategy } = require("../model/strategies/BaseStrategies/RecursiveStrategy.js");
 

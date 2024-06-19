@@ -1,4 +1,4 @@
-class BaseStrategy {
+class OrganizationStrategy {
     // CONSTRUCTOR
     constructor() {
         // SET STRATEGIES
@@ -11,5 +11,5 @@ class BaseStrategy {
 }
 
 module.exports = {
-    BaseStrategy,
+    OrganizationStrategy,
 };
