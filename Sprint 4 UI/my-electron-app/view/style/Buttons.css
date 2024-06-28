@@ -1,0 +1,64 @@
+
+.icon-button {
+    width: fit-content;
+    min-width: fit-content;
+    padding: 25px;
+    padding-left: 40px;
+    padding-right: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    border-radius: 15px;
+    background-color: var(--menu-option-button-background-color);
+    cursor: pointer;
+    box-shadow: none;
+}
+
+.icon-button:hover {
+    transition: .3s;
+    box-shadow: 0px 0px 3px 0px var(--menu-option-button-hover-box-shadow-color);
+}
+
+.icon-button:not(:hover) {
+    /* transition: .3s;
+    box-shadow: none; */
+}
+
+.icon-button:hover .icon-button-img{
+    transition: .3s; /* Smooth transition for the hover effect */
+    transform: scale(1.1); /* Increase the size of the image */
+}
+
+.icon-button:not(:hover) .icon-button-img{
+    transition: .3s;
+    transform: scale(1);
+}
+
+
+.icon-button-text-container {
+    text-align: center;
+    font-size: large;
+    margin-top: 10px;
+    color : var(--menu-option-button-heading-color);
+}
+
+.icon-button-img-container {
+    margin-bottom: 5px;
+}
+
+.icon-button-img {
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+}
+
+/* <button id="organize-directory-btn" class="icon-button">
+<div class="icon-button-text-container">
+  Select
+</div>
+<div class="icon-button-img-container">
+  <img src="../media/images/AnalyseLogo.png" alt="Organize Directory Icon" class="icon-button-img">
+</div>
+</button> */
