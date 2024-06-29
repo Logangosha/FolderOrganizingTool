@@ -1,0 +1,13 @@
+.loading-container {
+    text-align: left; 
+    margin:20px;
+    background-color: var(--progress-bar-container-background-color);
+    padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0px 0px 3px 0px var(--menu-option-button-hover-box-shadow-color);
+  }
+  
+  .loading-gif {
+    width: 100px;
+    height: 100px;
+  }
