@@ -5,7 +5,7 @@ const { ipcRenderer } = require('electron');
 function loadMainMenuStateView() {
     console.log("Loading Main Menu State View...");
     document.getElementById('header-heading').innerHTML = "Main Menu State";
-    document.title = "Main Menu State";
+    // document.title = "Main Menu State";
     document.getElementById('main-content').innerHTML = `
       <!-- MAIN MENU STATE VIEW -->
       <!-- Get Style Sheet For Main menu -->

@@ -10,7 +10,7 @@ function loadChangeApprovalStateView(organizationAlgorithmResponse) {
   // console.log(organizationAlgorithmResponse.originalDirectoryJSON)
   console.log(organizationAlgorithmResponse.organizedDirectoryJSON)
     console.log("Loading Change Approval State View...");
-    document.title = "Change Approval State";
+    // document.title = "Change Approval State";
     document.getElementById('header-heading').innerHTML = "Change Approval State";
     document.getElementById('main-content').innerHTML = `
     <!-- CHANGE APPROVAL STATE VIEW -->
@@ -35,7 +35,7 @@ function loadChangeApprovalStateView(organizationAlgorithmResponse) {
     <div class="container row">
       <button id="try-again-btn" class="icon-button">
         <div class="icon-button-img-container">
-          <img src="../media/images/retryicon.png" alt="Organize Directory Icon" class="icon-button-img">
+          <img src="../media/images/Retryicon.png" alt="Organize Directory Icon" class="icon-button-img">
           <div class="icon-button-text-container">
           Retry
           </div>
@@ -136,8 +136,8 @@ function loadChangeApprovalStateView(organizationAlgorithmResponse) {
           }
         }
         catch (error) {
-          console.error('Error creating divs from JSON:', error);
-          ipcRenderer.invoke('transition-to-execute-organization-algorithm-state', organizationAlgorithmResponse.originalDirectory.Metadata.path );
+          // console.error('Error creating divs from JSON:', error);
+          ipcRenderer.invoke('transition-to-success-fail-notification-state', "An error occurred while processing the directory. Please try again or select a different directory.");
         }
     }
   

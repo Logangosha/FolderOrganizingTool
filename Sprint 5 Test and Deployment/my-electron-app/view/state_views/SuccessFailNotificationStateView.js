@@ -5,7 +5,7 @@ const { ipcRenderer } = require('electron');
 // FUNCTION TO LOAD SUCCESS FAIL NOTIFICATION STATE VIEW
 function loadSuccessFailNotificationStateView(result) {
     console.log("Loading Success Fail Notificaiton State View...");
-    document.title = "Success Fail Notification State";
+    // document.title = "Success Fail Notification State";
     document.getElementById('header-heading').innerHTML = "Success Fail Notification State";
     document.getElementById('main-content').innerHTML = `
     <!-- SUCCESS FAIL NOTIFICATION STATE VIEW -->
@@ -16,7 +16,7 @@ function loadSuccessFailNotificationStateView(result) {
         <div class="container row">
       <button id="try-again-btn" class="icon-button">
         <div class="icon-button-img-container">
-          <img src="../media/images/retryicon.png" alt="Organize Directory Icon" class="icon-button-img">
+          <img src="../media/images/Retryicon.png" alt="Organize Directory Icon" class="icon-button-img">
           <div class="icon-button-text-container">
           Try Again
           </div>
@@ -24,7 +24,7 @@ function loadSuccessFailNotificationStateView(result) {
       </button> 
       <button id="main-menu-btn" class="icon-button">
         <div class="icon-button-img-container">
-          <img src="../media/images/mainmenuicon.png" alt="Organize Directory Icon" class="icon-button-img">
+          <img src="../media/images/Mainmenuicon.png" alt="Organize Directory Icon" class="icon-button-img">
           <div class="icon-button-text-container">
           Main Menu
           </div>

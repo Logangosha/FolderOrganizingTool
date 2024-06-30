@@ -101,6 +101,7 @@ stateManager.onThemeUpdate((event, shouldUseDarkColors) => {
 // UPDATE THEME
 function updateTheme(shouldUseDarkColors)
 {
+    // shouldUseDarkColors= false;
     console.log("Updating theme...");
     document.documentElement.style.setProperty('--body-background-color', shouldUseDarkColors? "var(--dark-color3)" : "var(--light-color2)");
     document.documentElement.style.setProperty('--header-background-color', shouldUseDarkColors? "var(--dark-color1)" : "var(--light-color3");

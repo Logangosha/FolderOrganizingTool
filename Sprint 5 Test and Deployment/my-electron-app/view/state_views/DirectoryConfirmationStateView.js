@@ -4,7 +4,7 @@ const { ipcRenderer } = require('electron');
 // FUNCTION TO LOAD DIRECTORY CONFIRMATION STATE VIEW
 function loadDirectoryConfirmationStateView(selectDirectoryPath) {
     console.log("Loading Directory Confirmation State View...");
-    document.title = "Directory Confirmation State";
+    // document.title = "Directory Confirmation State";
     document.getElementById('header-heading').innerHTML = "Directory Confirmation State";
     // console.log("Selected Directory Path: " + selectDirectoryPath);
     document.getElementById('main-content').innerHTML = `

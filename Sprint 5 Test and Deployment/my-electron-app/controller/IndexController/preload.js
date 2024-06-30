@@ -25,5 +25,6 @@ contextBridge.exposeInMainWorld('stateManager', {
     onThemeUpdate: (listener) => ipcRenderer.on('theme-update', listener),
     getCurrentTheme: () => {return ipcRenderer.invoke('get-current-theme')},
     // shell.openExternal(url);
-    openExternal: (url) => shell.openExternal(url)
+    openExternal: (url) => shell.openExternal(url),
+    
 });

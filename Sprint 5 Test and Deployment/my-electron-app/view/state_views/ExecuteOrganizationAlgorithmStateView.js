@@ -4,7 +4,7 @@ const { ipcRenderer } = require('electron');
 // FUNCTION TO LOAD EXECUTE ORGANIZATION ALGORITHM STATE VIEW
 function loadExecuteOrganizationAlgorithmStateView(selectedDirectoryPath) {
     console.log("Loading Execute Organization Algorithm State View...");
-    document.title = "Execute Organization Algorithm State";
+    // document.title = "Execute Organization Algorithm State";
     document.getElementById('header-heading').innerHTML = "Execute Organization Algorithm State";
     document.getElementById('main-content').innerHTML = `
     <!-- EXECUTE ORGANIZATION ALGORITHM STATE VIEW -->
