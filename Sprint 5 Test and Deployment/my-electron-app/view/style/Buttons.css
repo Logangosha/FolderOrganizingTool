@@ -2,9 +2,7 @@
 .icon-button {
     width: fit-content;
     min-width: fit-content;
-    padding: 25px;
-    padding-left: 40px;
-    padding-right: 40px;
+    padding: 30px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -42,15 +40,16 @@
     font-size: large;
     margin-top: 10px;
     color : var(--menu-option-button-heading-color);
+    display: none;
 }
 
 .icon-button-img-container {
-    margin-bottom: 5px;
+    /* margin-bottom: 5px; */
 }
 
 .icon-button-img {
-    width: 100px;
-    height: 100px;
+    width: 50px;
+    height: 50px;
     overflow: hidden;
 }
 

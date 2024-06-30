@@ -13,6 +13,8 @@ class NativeFileSystemExplorer extends DirectorySelectionStrategy {
         let result = await dialog.showOpenDialog(options);
         
         if (result.canceled) {
+            console.log("User canceled the dialog.");
+            this.selectedDirectoryPath = null;
             return null;
         }
 

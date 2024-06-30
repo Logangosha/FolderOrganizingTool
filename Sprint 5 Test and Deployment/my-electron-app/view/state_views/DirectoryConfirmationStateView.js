@@ -19,20 +19,18 @@ function loadDirectoryConfirmationStateView(selectDirectoryPath) {
     <button id="no-btn" class="icon-button">
     <div class="icon-button-img-container">
     <img src="../media/images/X.png" alt="Organize Directory Icon" class="icon-button-img">
-        <div class="icon-button-text-container">
+    </div>
+            <div class="icon-button-text-container">
     No
     </div>
-    </div>
-    
     </button> 
     <button id="yes-btn" class="icon-button">
     <div class="icon-button-img-container">
     <img src="../media/images/Checkmark.png" alt="Organize Directory Icon" class="icon-button-img">
-        <div class="icon-button-text-container">
+    </div>
+            <div class="icon-button-text-container">
     Yes
     </div>
-    </div>
-    
     </button> 
     </div>
     </div>

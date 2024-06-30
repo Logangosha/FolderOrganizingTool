@@ -6,7 +6,7 @@
     gap: 40px;
     padding-left: 80px;
     padding-right: 80px;
-    padding-bottom: 40px;
+    padding-bottom: 48px;
 }
 .menu-option-button {
     width: 70%;
@@ -21,6 +21,7 @@
     border: none;
     border-radius: 15px;
     background-color: var(--menu-option-button-background-color);
+    cursor: pointer;
 }
 
 
