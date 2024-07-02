@@ -3,7 +3,6 @@ const { ipcRenderer } = require('electron');
 
 // FUNCTION TO LOAD DIRECTORY SELECTION STATE VIEW
 function loadDirectorySelectionStateView() {
-    console.log("Loading Directory Selection State View...");
     // document.title = "Directory Selection State";
     document.getElementById('header-heading').innerHTML = "Directory Selection State";
     document.getElementById('main-content').innerHTML = `

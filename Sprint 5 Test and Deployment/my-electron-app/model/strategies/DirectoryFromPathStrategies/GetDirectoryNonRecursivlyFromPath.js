@@ -35,7 +35,6 @@ class GetDirectoryNonRecursivelyFromPath extends GetDirectoryFromPathStrategy
                     // ADD METADATA ATTRIBUTES
                     subdirectory.Metadata = this.getMetadata(subdirectory, stats, itemPath);
                     // ADD SUBDIRECTORY TO DIRECTORY
-                    // SKIP RECURSIVE CALL // subdirectory = await this.initializeDirectory(subdirectory);
                     directory.addSubdirectory(subdirectory);
 
                     // ACCUMULATE THE SIZE OF THE SUBDIRECTORY

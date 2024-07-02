@@ -14,11 +14,10 @@ class OrganizationAlgorithmExecutor {
     // EXECUTE
     async execute(){
         // GET DIRECTORY FROM PATH
-        // console.log("Getting directory from path");
+        console.log("Getting directory from path");
         let response = await this.getDirectoryFromPathStrategy.getDirectoryFromPath(this.selectedDirectoryPath, this.toJSONStrategy);
         this.originalDirectoryObject = response.directoryObject;
         this.originalDirectoryJSON = response.directoryJSONObject;
-        // console.log("Original Directory JSON: "+ JSON.stringify(this.originalDirectoryJSON, null, 2));
         // ORGANIZE DIRECTORY
         this.organizedDirectoryJSON = await this.organizationAlgorithm.organize(this.originalDirectoryJSON);
         // RETURN RESPONSE

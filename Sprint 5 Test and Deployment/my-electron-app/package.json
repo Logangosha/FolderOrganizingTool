@@ -14,9 +14,10 @@
   "build": {
     "appId": "FolderOrganizingTool",
     "win": {
-      "target": ["nsis"],
+      "target": [
+        "nsis"
+      ],
       "icon": "view/media/images/DefaultLogoWithCube.ico"
-
     },
     "nsis": {
       "oneClick": false,

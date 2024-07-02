@@ -3,8 +3,6 @@ const { ipcRenderer } = require('electron');
 
 // FUNCTION TO LOAD PERFORM DIRECTORY MANIPULATION STATE VIEW
   function loadPerformDirectoryManipulationStateView(organizationAlgorithmResponse) {
-    console.log("Loading Perform Directory Manipulation State View...");
-    // document.title = "Perform Directory Manipulation State";
     document.getElementById('header-heading').innerHTML = "Perform Directory Manipulation State";
     document.getElementById('main-content').innerHTML = `
     <!-- PERFORM DIRECTORY MANIPULATION STATE VIEW -->

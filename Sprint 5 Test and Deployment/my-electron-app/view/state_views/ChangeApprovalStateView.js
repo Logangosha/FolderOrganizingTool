@@ -5,12 +5,6 @@ const { ipcRenderer } = require('electron');
 
 // FUNCTION TO LOAD CHANGE APPROVAL STATE VIEW
 function loadChangeApprovalStateView(organizationAlgorithmResponse) {
-  // console.log(organizationAlgorithmResponse)
-  console.log(organizationAlgorithmResponse.originalDirectory)
-  // console.log(organizationAlgorithmResponse.originalDirectoryJSON)
-  console.log(organizationAlgorithmResponse.organizedDirectoryJSON)
-    console.log("Loading Change Approval State View...");
-    // document.title = "Change Approval State";
     document.getElementById('header-heading').innerHTML = "Change Approval State";
     document.getElementById('main-content').innerHTML = `
     <!-- CHANGE APPROVAL STATE VIEW -->
@@ -90,9 +84,6 @@ function loadChangeApprovalStateView(organizationAlgorithmResponse) {
     const unorganizedContainer = document.getElementById('unorganized-directory-container');
     const organizedContainer = document.getElementById('organized-directory-container');
 
-    // SET TEMP ICON
-    // document.getElementById('temp-icon').src = organizationAlgorithmResponse.originalDirectory.DirectoryItems[0].Metadata.icon;
-
     // FUNCTION TO CREATE AND APPEND DIVS FOR EACH KEY IN THE JSON
       function createDivsFromJson(json, parentElement) {
         try{
@@ -128,7 +119,6 @@ function loadChangeApprovalStateView(organizationAlgorithmResponse) {
                 div.appendChild(icon);
                   div.classList.add('file');
                   div.innerHTML += key;
-                // div.innerHTML = key;
               }
             
             parentElement.appendChild(div);
@@ -136,7 +126,6 @@ function loadChangeApprovalStateView(organizationAlgorithmResponse) {
           }
         }
         catch (error) {
-          // console.error('Error creating divs from JSON:', error);
           ipcRenderer.invoke('transition-to-success-fail-notification-state', "An error occurred while processing the directory. Please try again or select a different directory.");
         }
     }
@@ -156,10 +145,8 @@ function loadChangeApprovalStateView(organizationAlgorithmResponse) {
 
             // FOLDER BUTTON EVENT LISTENER
             document.querySelectorAll('.folder-btn').forEach(item => {
-              console.log("Folder Button Found")
               // ITEM IS THE BUTTON
               item.addEventListener('click', event => {
-                console.log("Folder Button Clicked")
                 // LOOP THROUGH THE SIBLINGS OF THE BUTTON
                 item.parentNode.childNodes.forEach(child => {
                   // TOGGLE THE HIDDEN CLASS
@@ -167,7 +154,7 @@ function loadChangeApprovalStateView(organizationAlgorithmResponse) {
                   else {
                     if(!(child === item)) 
                     {
-                      child.classList.toggle('hidden');  // Toggle the "hidden" class
+                      child.classList.toggle('hidden'); 
                   }
                 }  
                 })

@@ -14,6 +14,7 @@ const {
     onThemeUpdate,
     getCurrentTheme,
     openExternal,
+    updateMainTheme,
     } = window.stateManager;
 
 
@@ -24,11 +25,13 @@ let currentState;
 document.addEventListener('DOMContentLoaded', async () => {
     console.log("Document loaded");
     await updateState(await getCurrentState());
-    updateTheme(getCurrentTheme());
+    updateTheme(await getCurrentTheme());
 });
 
 // HEADER 
 const Logo = document.getElementById('logo');
+const themeToggle = document.getElementById('themeToggleBtn');
+
 // ON LOGO CLICK
 Logo.addEventListener('click', async () => {
     updateStateToMainMenu();
@@ -43,6 +46,8 @@ GitHubLink.addEventListener('click', (event) => {
     event.preventDefault();
     openExternal(GitHubLink.getAttribute('href'));
 });
+
+// FOR FUTURE IMPLEMENTATION
 
 // // ON FAQLINK CLICK
 // FaqLink.addEventListener('click', (event) => {
@@ -88,21 +93,30 @@ GitHubLink.addEventListener('click', (event) => {
 
 // ON STATE CHANGE
 stateManager.onStateChange(async (event, newState, args = null) => {
-    console.log("Received state change:", newState);
     await updateState(newState, args);
   });
 
 // ON THEME UPDATE
 stateManager.onThemeUpdate((event, shouldUseDarkColors) => {
-    console.log("New theme: " + (shouldUseDarkColors? "Dark" : "Light"));
     updateTheme(shouldUseDarkColors);
 });
+
+// ON THEME TOGGLE CLICK
+themeToggle.addEventListener('click', async () => {
+    // TOGGLE THEME
+    await updateMainTheme();
+});
+
+// SET THEME ICON
+function setThemeIcon(shouldUseDarkColors)
+{
+    document.getElementsByClassName('theme-toggle-img')[0].src = shouldUseDarkColors? "../../view/media/images/Moonicon.png" : "../../view/media/images/SunIcon.png";
+}
 
 // UPDATE THEME
 function updateTheme(shouldUseDarkColors)
 {
-    // shouldUseDarkColors= false;
-    console.log("Updating theme...");
+    console.log("Updating theme to:" + (shouldUseDarkColors? "Dark" : "Light"));
     document.documentElement.style.setProperty('--body-background-color', shouldUseDarkColors? "var(--dark-color3)" : "var(--light-color2)");
     document.documentElement.style.setProperty('--header-background-color', shouldUseDarkColors? "var(--dark-color1)" : "var(--light-color3");
     document.documentElement.style.setProperty('--main-content-background-color', shouldUseDarkColors? "var(--dark-color2)" : "var(--light-color2)");
@@ -129,13 +143,13 @@ function updateTheme(shouldUseDarkColors)
     document.documentElement.style.setProperty('--scrollbar-background-color', shouldUseDarkColors? "var(--dark-color2)" : "var(--light-color2)");
     document.documentElement.style.setProperty('--scrollbar-track-color', shouldUseDarkColors? "var(--dark-color4)" : "var(--light-color4)");
     document.documentElement.style.setProperty('--scrollbar-track-hover-color', shouldUseDarkColors? "var(--dark-color6)" : "var(--light-color6)");
+    // UPDATE THEME ICON
+    setThemeIcon(shouldUseDarkColors);
 }
 
 // UPDATE STATE
 async function updateState(newState, args = null)
 {
-    console.log("Updating state...");
-    console.log("New state:", newState);
     let tempState = newState; // get state from main
     if(currentState == tempState) { return; }
     currentState = tempState;

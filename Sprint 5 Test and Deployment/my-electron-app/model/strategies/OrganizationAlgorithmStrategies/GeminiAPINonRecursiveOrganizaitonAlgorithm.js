@@ -84,12 +84,59 @@ class GeminiAPINonRecursiveOrganizaitonAlgorithm  extends OrganizationAlgorithmS
     async generatePromptFromDirectory(originalDirectoryJSON) {
         var prompt = "Please organize this directory JSON object. \n" +
         "You may create new folders to categorize the items as necessary. \n" +
-        "Ensure each file is included only once; do not create or duplicate files. \n" +
+        "Ensure each file is included only once; do not create or duplicate files!!! \n" +
+        "The root directory is the first key in the JSON object. \n" +
         "Do not rename the root directory. \n"+
+        "Do not create folders outside of the root directory.\n" + 
+        "All new folders must be subdirectories of the root directory.\n" +
         "If the input is already organized, please return the input as is. \n" +
-        "If the input consist of only folders you may create new folders to categorize them if necessary. \n" +        
+        "If the input consist of only folders, carefully determine if the folders can be categorized. \n" +        
         "Do not return any other text, only return a JSON object!!!\n" +
-        "Organize This Directory:\n"; 
+
+        "Example JSON Object: \n" +
+        "{\n" +
+        "    \"Desktop\": {\n" +
+        "        \"Minecraft.exe\": {),\n" +
+        "        \"MicrosoftWord.exe\": {),\n" +
+        "        \"MicrosoftExcel.exe\": {),\n" +
+        "        \"Chrome.exe\": {),\n" +
+        "        \"Firefox.exe\": {),\n" +
+        "        \"Edge.exe\": {),\n" +
+        "        \"AdobeReader.exe\": {),\n" +
+        "        \"Paint.exe\": {),\n" +
+        "        \"Calculator.exe\": {),\n" +
+        "        \"Notepad.exe\": {),\n" +
+        "        \"Discord.exe\": {),\n" +
+        "        \"Steam.exe\": {),\n" +
+        "    }\n" +
+        "}\n" +
+
+        "Example Output: \n" +
+        "{\n" +
+        "    \"Desktop\": {\n" +
+        "        \"Applications\": {\n" +
+        "            \"MicrosoftWord.exe\": {},\n" +
+        "            \"MicrosoftExcel.exe\": {},\n" +
+        "            \"AdobeReader.exe\": {},\n" +
+        "            \"Paint.exe\": {},\n" +
+        "            \"Calculator.exe\": {},\n" +
+        "            \"Notepad.exe\": {},\n" +
+        "            \"Discord.exe\": {},\n" +
+        "        }\n" +
+        "        \"Browsers\": {\n" +
+        "            \"Chrome.exe\": {},\n" +
+        "            \"Firefox.exe\": {},\n" +
+        "            \"Edge.exe\": {}\n" +
+        "        }\n" +
+        "        \"Games\": {\n" +
+        "            \"Minecraft.exe\": {},\n" +
+        "            \"Steam.exe\": {}\n" +
+        "        }\n" +
+        "    }\n" +
+        "}\n" +
+
+
+        "Please Organize This Directory:\n"; 
         // CREATE JSON STRING 
         var directoryToJSON = JSON.stringify(originalDirectoryJSON, null, 2);
         // ADD JSON STRING TO PROMPT

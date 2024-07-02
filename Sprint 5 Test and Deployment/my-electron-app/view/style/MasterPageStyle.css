@@ -7,18 +7,15 @@ html, body {
     box-sizing: border-box;
     height: 100%;
     width: 100%;
-    /* overflow: hidden; */
     background-color: var(--body-background-color);
 }
 
-/* Hide scrollbar for Chrome, Safari and Opera */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
 
-/* Hide scrollbar for Firefox */
 .no-scrollbar {
-  scrollbar-width: none; /* Firefox */
+  scrollbar-width: none; 
 }
 
 /* HEADERS */
@@ -102,16 +99,42 @@ h3 {
   .header {
     display: flex;
     align-items: center;
-    justify-content: center;
+    /* justify-content: center; */
+    justify-content: space-between;
     background-color: var(--header-background-color);
     gap: 16px;
+  }
+
+  .theme-toggle-button-container
+  {
+    flex-shrink: 0;
+    margin-right: 16px;
+  }
+
+  .theme-toggle-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .theme-toggle-img {
+    width: 30px;
+    height: 30px;
+  }
+
+  .center-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
   }
 
   .logo-button {
     background-color: transparent;
     border: none;
     cursor: pointer;
-    padding: 0;
+    padding: 0 16px;
   }
 
   .logo-img {
@@ -121,21 +144,19 @@ h3 {
 
     /* MAIN CONTENT */
   .main-content {
-    /* padding: 16px; */
-    /* margin: 10px;
-    border-radius: 5px; */
-    overflow-y: scroll; /* Enable vertical scrolling */
+    overflow-y: scroll; 
     display: flex;
     flex-direction: column;
     gap: 16px;
-    /* Add the class to hide the scrollbar */
     scrollbar-width: none;
     background-color: var(--main-content-background-color);
     text-align: center;
+    align-items: center;
   }
 
   .main-content-heading {
     padding-left: 16px;
+    width: 50%;
   }
 
     /* FOOTER */
@@ -147,10 +168,8 @@ h3 {
 
     /* STYLES FOR THE UNORDERED LIST INSIDE THE FOOTER */
     .footer-list {
-        /* remove decoration */
         list-style-type: none;
         padding: 0;
-        /* margin: 10px; */
         display: flex;
         flex-wrap: wrap;
     }
@@ -170,16 +189,12 @@ h3 {
 
     /* STYLES FOR THE NESTED UNORDERED LISTS INSIDE EACH LIST ITEM */
     .footer-sub-list {
-        /* remove decoration */
         list-style-type: none;
         padding: 0;
         margin: 0;
     }
 
-    /* STYLES FOR EACH LIST ITEM INSIDE THE NESTED LIST */
-    .footer-sub-list-item {
-
-    }
+    /* STYLES FOR THE LIST ITEMS INSIDE THE NESTED UNORDERED LISTS */
 
     /* STYLES FOR THE LINKS INSIDE THE FOOTER */
     .footer-link {

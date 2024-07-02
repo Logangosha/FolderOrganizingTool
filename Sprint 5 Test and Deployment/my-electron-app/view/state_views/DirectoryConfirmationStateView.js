@@ -6,7 +6,6 @@ function loadDirectoryConfirmationStateView(selectDirectoryPath) {
     console.log("Loading Directory Confirmation State View...");
     // document.title = "Directory Confirmation State";
     document.getElementById('header-heading').innerHTML = "Directory Confirmation State";
-    // console.log("Selected Directory Path: " + selectDirectoryPath);
     document.getElementById('main-content').innerHTML = `
     <!-- DIRECTORY CONFIRMATION STATE VIEW -->
     <!-- Get Style Sheet For Directory Confirmation -->
@@ -15,7 +14,7 @@ function loadDirectoryConfirmationStateView(selectDirectoryPath) {
     <h2>Is this the correct directory?</h2>
     <div class="container confirmation-container">
     <h3 class="selected-directory-path">${selectDirectoryPath}</h3>
-    <div class="container row special-spacing">
+    <div class="container row">
     <button id="no-btn" class="icon-button">
     <div class="icon-button-img-container">
     <img src="../media/images/X.png" alt="Organize Directory Icon" class="icon-button-img">

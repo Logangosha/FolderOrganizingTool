@@ -8,16 +8,13 @@ class DirectoryManipulationPerformer {
 
     // PERFORM DIRECTORY MANIPULATION
     async performDirectoryManipulation(organizationAlgorithmResponse, directoryManipulationStrategy) {
+        console.log("Performing directory manipulation");
        this.directoryManipulationStrategy = directoryManipulationStrategy;
-       console.log("OrganizationPerformer: Performing organization");
-       console.log("Organization Algorithm Response: "+ JSON.stringify(organizationAlgorithmResponse, null, 2)
-         );
-       console.log("Directory Manipulation Strategy: "+ directoryManipulationStrategy);
        // PERFORM DIRECTORY MANIPULATION AND RETURN RESPONSE
        let response = await this.directoryManipulationStrategy.organize(organizationAlgorithmResponse);
        // IF SUCCESSFUL RETURN SUCCESS MESSAGE
        if(response) {
-           return "Organization performed successfully";
+           return "Organization Performed Successfully";
        }
         // ELSE RETURN FAILURE MESSAGE 
        else {

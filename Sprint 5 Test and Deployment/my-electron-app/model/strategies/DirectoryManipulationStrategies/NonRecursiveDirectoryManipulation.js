@@ -24,11 +24,9 @@ class NonRecursiveDirectoryManipulation extends DirectoryManipulationStrategy {
             // CREATE NEW DIRECTORIES
             console.log("Creating new directories");
             for (const key in rootChildren) {
-                console.log("Checking key: " + key);
                 // CHECK IF KEY IS ALREADY A DIRECTORY
                 if (directoryObj.Subdirectories.some(subdir => subdir.Metadata.name === key)) {
                     console.log(`Directory ${key} already exists, skipping creation.`);
-                    // continue;
                 } else {
                     const newPath = path.join(directoryObj.Metadata.path, key);
                     console.log(`Queueing directory creation: ${newPath}`);
@@ -49,7 +47,7 @@ class NonRecursiveDirectoryManipulation extends DirectoryManipulationStrategy {
                 await this.queueMoveItemToCorrectLocation(directoryObj.DirectoryItems[item], organizedDirectoryJson, directoryRootPath);
             }
 
-            // Execute the queued operations
+            // EXECUTE QUEUED OPERATIONS
             console.log("Executing queued operations");
             await this.executeQueue();
 
@@ -123,8 +121,6 @@ class NonRecursiveDirectoryManipulation extends DirectoryManipulationStrategy {
                 await operation();
             } catch (err) {
                 console.error('Error executing operation in queue:', err);
-                // Here you can handle the error, e.g., logging, retrying, or rolling back previous operations if necessary.
-                // For this example, we'll log the error and continue with the next operation.
             }
         }
     }

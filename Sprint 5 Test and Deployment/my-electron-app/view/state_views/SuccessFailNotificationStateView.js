@@ -4,8 +4,6 @@ const { ipcRenderer } = require('electron');
 
 // FUNCTION TO LOAD SUCCESS FAIL NOTIFICATION STATE VIEW
 function loadSuccessFailNotificationStateView(result) {
-    console.log("Loading Success Fail Notificaiton State View...");
-    // document.title = "Success Fail Notification State";
     document.getElementById('header-heading').innerHTML = "Success Fail Notification State";
     document.getElementById('main-content').innerHTML = `
     <!-- SUCCESS FAIL NOTIFICATION STATE VIEW -->
@@ -69,9 +67,8 @@ function loadSuccessFailNotificationStateView(result) {
         </div>
         `;
         
-        // IF RESULT IS SUCCESSFUL RESULT WILL BE "Organization performed successfully"
-        if (result === "Organization performed successfully") {
-          // do not display try again button
+        // IF RESULT IS SUCCESSFUL RESULT WILL BE "Organization Performed Successfully"
+        if (result === "Organization Performed Successfully") {
           document.getElementById("try-again-btn").style.display = "none";
     }
     

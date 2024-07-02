@@ -9,7 +9,6 @@
     padding-bottom: 48px;
 }
 .menu-option-button {
-    width: 70%;
     min-width: 500px;
     padding: 25px;
     padding-left: 40px;
@@ -24,33 +23,25 @@
     cursor: pointer;
 }
 
-
-
-/* Hover effect */
 .menu-option-button:hover .menu-option-button-img {
-    transition: .3s; /* Smooth transition for the hover effect */
-    transform: scale(1.2); /* Increase the size of the image */
+    transition: .3s; 
+    transform: scale(1.2); 
 }
 
 .menu-option-button:not(:hover) .menu-option-button-img {
     transition: .3s;
-    transform: scale(1); /* Reset image size when not hovering */
+    transform: scale(1); 
   }
 
 .menu-option-button:hover .menu-option-button-call-to-action {
     
-    transition: 1s ease; /* Smooth transition for the hover effect */
-    text-decoration: underline; /* Underline the call-to-action text */
+    transition: 1s ease; 
+    text-decoration: underline; 
 }
 
 .menu-option-button:hover {
     box-shadow: 0px 0px 3px 0px var(--menu-option-button-hover-box-shadow-color);
     transition: .2s;
-}
-
-.menu-option-button:not(:hover) {
-    box-shadow: none;
-    transition: .3s;
 }
 
 

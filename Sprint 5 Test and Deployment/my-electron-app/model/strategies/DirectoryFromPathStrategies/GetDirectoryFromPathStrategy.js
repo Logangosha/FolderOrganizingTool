@@ -12,11 +12,6 @@ class GetDirectoryFromPathStrategy {
     // METHOD TO RETURN A DIRECTORY OBJECT FROM A GIVEN PATH
     async getDirectoryFromPath(directoryPath, toJSONStrategy) {
 
-        // console.log("Getting directory from path in GetDirectoryFromPathStrategy");
-
-        // console.log("Directory Path: "+ directoryPath);
-        // console.log("ToJSONStrategy: "+ toJSONStrategy);
-
         // SET TO JSON STRATEGY
         this.setToJSONStrategy(toJSONStrategy);
 

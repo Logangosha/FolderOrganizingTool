@@ -80,7 +80,6 @@
 
 .progress-bar-node-connection.incomplete {
     background-color: var(--progress-bar-node-connection-incomplete-background-color);
-
 }
 
 .progress-bar-node:not(:last-child)::after {

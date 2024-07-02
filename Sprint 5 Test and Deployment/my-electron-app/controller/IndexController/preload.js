@@ -21,10 +21,8 @@ contextBridge.exposeInMainWorld('stateManager', {
     loadPerformOrganizationStateView: (organizationAlgorithmResponse) => loadPerformDirectoryManipulationStateView(organizationAlgorithmResponse),
     loadSuccessFailNotificationStateView: (result) => loadSuccessFailNotificationStateView(result),
     loadMainMenuStateView: () => loadMainMenuStateView(),
-    //     mainWindow.webContents.send('theme-updated', nativeTheme.shouldUseDarkColors);
     onThemeUpdate: (listener) => ipcRenderer.on('theme-update', listener),
     getCurrentTheme: () => {return ipcRenderer.invoke('get-current-theme')},
-    // shell.openExternal(url);
     openExternal: (url) => shell.openExternal(url),
-    
+    updateMainTheme: () => ipcRenderer.invoke('update-theme'),
 });

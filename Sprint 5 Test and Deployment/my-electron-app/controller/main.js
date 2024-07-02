@@ -8,6 +8,7 @@ const { DirectoryManipulationPerformer } = require("./state_controllers/PerformD
 
 //  APP STRATEGIES
 const { NonRecursiveStrategy } = require("../model/strategies/OrganizationStrategies/NonRecursiveStrategy.js");
+const { get } = require("http");
 // Replace the above import with the following import to use the RecursiveStrategy:
 // const { RecursiveStrategy } = require("../model/strategies/BaseStrategies/RecursiveStrategy.js");
 
@@ -25,6 +26,7 @@ const State = {
     SUCCESS_FAIL_NOTIFICATION: 'successFailNotification',
 };
 
+let currentTheme = nativeTheme.shouldUseDarkColors;
 
 // MAIN WINDOW CREATION
 function createMainWindow() 
@@ -43,8 +45,8 @@ function createMainWindow()
         }
     });
 
-    // mainWindow.removeMenu();
-    // mainWindow.flashFrame(false);
+    mainWindow.removeMenu();
+    mainWindow.flashFrame(false);
 
     mainWindow.setTitle("Folder Organizing Tool");
     app.setName("Folder Organizing Tool");
@@ -64,7 +66,7 @@ function createMainWindow()
     // SET INITIAL STATE
     function getInitialState()
     {
-        console.log("Setting initial state to main menu");
+        console.log("Initial State is Main Menu");
         return State.MAIN_MENU;   
     }
 
@@ -77,22 +79,6 @@ function createMainWindow()
         // NOTIFY RENDERER
         mainWindow.webContents.send('state-changed', newState, args);
     }
-
-    // ON UPDATE THEME
-    nativeTheme.on('updated', () => {
-        console.log('Theme updated:');
-        console.log('Dark mode:', nativeTheme.shouldUseDarkColors);
-        // NOTIFY RENDERER
-        mainWindow.webContents.send('theme-update', nativeTheme.shouldUseDarkColors);
-    });
-
-    // FUNCTION TO GET CURRENT THEME
-    function getCurrentTheme()
-    {
-        let currentTheme = (nativeTheme.shouldUseDarkColors? "Dark" : "Light");
-        console.log("Current Theme: "+ currentTheme);
-        return nativeTheme.shouldUseDarkColors;
-    }
     
     // HANDLE IPC MESSAGES
     // HANDLE GET CURRENT STATE CALL
@@ -100,9 +86,27 @@ function createMainWindow()
         return currentState;
     });
 
+    // ON UPDATE THEME
+    nativeTheme.on('updated', () => {
+        currentTheme = nativeTheme.shouldUseDarkColors;
+        updateTheme();
+    });
+    
+    // HANDLE UPDATE THEME CALL
+    ipcMain.handle('update-theme', (event) => {
+        currentTheme = !currentTheme;
+        updateTheme();
+    });
+
+    function updateTheme()
+    {
+        nativeTheme.themeSource = (currentTheme) ? 'dark' : 'light';
+        mainWindow.webContents.send('theme-update', (currentTheme));
+    }
+
     // HANDLE GET CURRENT THEME CALL
     ipcMain.handle('get-current-theme', () => {
-        return getCurrentTheme();
+        return currentTheme;
     });
 
     // HANDLE GET MAIN WINDOW CALL
