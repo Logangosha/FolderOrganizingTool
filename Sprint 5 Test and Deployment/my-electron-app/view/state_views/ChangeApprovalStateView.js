@@ -11,7 +11,7 @@ function loadChangeApprovalStateView(organizationAlgorithmResponse) {
     <!-- Get Style Sheet For Change Approval -->
     <link rel="stylesheet" type="text/css" href="../style/ChangeApprovalStateViewStyle.css">
     <link rel="stylesheet" type="text/css" href="../style/Buttons.css">
-    <h2>Do you want to approve these changes?</h2>
+    <h2 class="main-content-heading">Do you want to approve these changes?</h2>
     <div class="container">
       <div class="display-changes-container">
         <div class="directory-container">

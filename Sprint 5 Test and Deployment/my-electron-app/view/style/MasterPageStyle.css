@@ -85,9 +85,14 @@ h3 {
             --menu-option-button-hover-box-shadow-color: var(--light-color9);
 }
 
+@font-face {
+  font-family: 'Cascadia';
+  src: url('../media/fonts/Cascadia.ttf') format('truetype');
+}
+
 /* FONTS */
 * {
-    font-family: 'Cascadia Code'; /* 'Roboto', sans-serif; */
+    font-family: 'Cascadia';
 }
 
 /* LAYOUT */
@@ -144,7 +149,7 @@ h3 {
 
     /* MAIN CONTENT */
   .main-content {
-    overflow-y: scroll; 
+    height: fit-content;
     display: flex;
     flex-direction: column;
     gap: 16px;
@@ -152,11 +157,14 @@ h3 {
     background-color: var(--main-content-background-color);
     text-align: center;
     align-items: center;
+    flex-grow: 1;
+    justify-content: center;
   }
 
   .main-content-heading {
     padding-left: 16px;
     width: 50%;
+    word-break: break-word;
   }
 
     /* FOOTER */
@@ -164,6 +172,7 @@ h3 {
     background-color: var(--footer-background-color);
     display: flex;
     justify-content: space-evenly;
+    text-align: center;
   }
 
     /* STYLES FOR THE UNORDERED LIST INSIDE THE FOOTER */
@@ -176,8 +185,8 @@ h3 {
 
     /* STYLES FOR EACH LIST ITEM INSIDE THE FOOTER LIST */
     .footer-list-item {
-        padding: 10px 20px 10px 0px;
-        margin: 10px 20px 10px 0px;
+        padding: 20px;
+        margin: 20px;
     }
 
     /* STYLES FOR THE HEADINGS INSIDE EACH LIST ITEM */
@@ -212,6 +221,8 @@ h3 {
   .main-container {
     display: flex;
     flex-direction: column;
+    height: 100vh;
+    justify-content: space-between;
   }
 
   .container {

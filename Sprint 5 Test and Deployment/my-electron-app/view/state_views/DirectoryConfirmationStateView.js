@@ -11,7 +11,7 @@ function loadDirectoryConfirmationStateView(selectDirectoryPath) {
     <!-- Get Style Sheet For Directory Confirmation -->
     <link rel="stylesheet" type="text/css" href="../style/DirectoryConfirmationStateViewStyle.css">
     <link rel="stylesheet" type="text/css" href="../style/Buttons.css">
-    <h2>Is this the correct directory?</h2>
+    <h2 class="main-content-heading">Is this the correct directory?</h2>
     <div class="container confirmation-container">
     <h3 class="selected-directory-path">${selectDirectoryPath}</h3>
     <div class="container row">

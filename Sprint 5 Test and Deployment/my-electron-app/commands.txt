@@ -1,0 +1,5 @@
+npm start:
+Starts the program. 
+
+npm run build-installer:
+Builds a distributable installer located int the dist folder

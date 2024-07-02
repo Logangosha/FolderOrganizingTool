@@ -8,7 +8,7 @@ function loadExecuteOrganizationAlgorithmStateView(selectedDirectoryPath) {
     <!-- EXECUTE ORGANIZATION ALGORITHM STATE VIEW -->
     <!-- Get Style Sheet For Execute Organization Algorithm -->
     <link rel="stylesheet" type="text/css" href="../style/ExecuteOrganizationAlgorithmStateViewStyle.css">
-    <h2>Executing Organization Algorithm...</h2>
+    <h2 class="main-content-heading">Executing Organization Algorithm...</h2>
     <div class="container">
       <div class="loading-container">
         <img id="loading-gif" class="loading-gif" src="../media/gifs/loading.gif" alt="Loading..." />

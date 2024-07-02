@@ -10,7 +10,7 @@ function loadSuccessFailNotificationStateView(result) {
     <!-- Get Style Sheet For Success Fail Notification -->
     <link rel="stylesheet" type="text/css" href="../style/SuccessFailNotificationStateViewStyle.css">
     <link rel="stylesheet" type="text/css" href="../style/Buttons.css">
-    <h2>${result}</h2>
+    <h2 class="main-content-heading">${result}</h2>
         <div class="container row">
       <button id="try-again-btn" class="icon-button">
         <div class="icon-button-img-container">

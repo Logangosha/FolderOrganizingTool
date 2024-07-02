@@ -10,7 +10,7 @@ function loadDirectorySelectionStateView() {
     <!-- Get Style Sheet For Directory Selection -->
     <link rel="stylesheet" type="text/css" href="../style/DirectorySelectionStateViewStyle.css">
     <link rel="stylesheet" type="text/css" href="../style/Buttons.css">
-    <h2>Select a directory:</h2>
+    <h2 class="main-content-heading">Select a directory:</h2>
     <!-- <button id="select-directory-btn">Select Directory</button> -->
     <div class="container ">
     <button id="select-directory-btn" class="icon-button">

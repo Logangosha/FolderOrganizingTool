@@ -10,6 +10,7 @@
 }
 .menu-option-button {
     min-width: 500px;
+    width: 60%;
     padding: 25px;
     padding-left: 40px;
     padding-right: 40px;
@@ -47,6 +48,7 @@
 
 .menu-option-button-text-container {
     text-align: left;
+    width: 50%;
 }
 
 .menu-option-button-heading {
@@ -78,6 +80,11 @@
     width: 100px;
     height: 100%;
     overflow: hidden;
+}
+
+.disabled {
+    pointer-events: none;
+    opacity: 0.5;
 }
 
 

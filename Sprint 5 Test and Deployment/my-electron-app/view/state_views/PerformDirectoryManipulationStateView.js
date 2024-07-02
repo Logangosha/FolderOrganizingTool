@@ -8,7 +8,7 @@ const { ipcRenderer } = require('electron');
     <!-- PERFORM DIRECTORY MANIPULATION STATE VIEW -->
     <!-- Get Style Sheet For Perform Directory Manipulation -->
     <link rel="stylesheet" type="text/css" href="../style/PerformDirectoryManipulationStateViewStyle.css">
-    <h2>Performing Directory Manipulation...</h2>
+    <h2 class="main-content-heading">Performing Directory Manipulation...</h2>
     <div class="container">
       <div class="loading-container">
         <img id="loading-gif" class="loading-gif" src="../media/gifs/loading.gif" alt="Loading..." />
