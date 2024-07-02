@@ -1,0 +1,90 @@
+
+.menu-options {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 40px;
+    padding-left: 80px;
+    padding-right: 80px;
+    padding-bottom: 48px;
+}
+.menu-option-button {
+    min-width: 500px;
+    width: 60%;
+    padding: 25px;
+    padding-left: 40px;
+    padding-right: 40px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    border: none;
+    border-radius: 15px;
+    background-color: var(--menu-option-button-background-color);
+    cursor: pointer;
+}
+
+.menu-option-button:hover .menu-option-button-img {
+    transition: .3s; 
+    transform: scale(1.2); 
+}
+
+.menu-option-button:not(:hover) .menu-option-button-img {
+    transition: .3s;
+    transform: scale(1); 
+  }
+
+.menu-option-button:hover .menu-option-button-call-to-action {
+    
+    transition: 1s ease; 
+    text-decoration: underline; 
+}
+
+.menu-option-button:hover {
+    box-shadow: 0px 0px 3px 0px var(--menu-option-button-hover-box-shadow-color);
+    transition: .2s;
+}
+
+
+.menu-option-button-text-container {
+    text-align: left;
+    width: 50%;
+}
+
+.menu-option-button-heading {
+    color: var(--menu-option-button-heading-color);
+    font-weight: bolder;
+    font-size: 1.7em;
+    margin-bottom: 0px;
+}
+
+.menu-option-button-description {
+    color: var(--menu-option-button-description-color);
+    margin-top: 5px;
+    font-size: 1.2em;
+    font-weight: lighter;
+}
+
+.menu-option-button-call-to-action {
+    color: var(--menu-option-button-call-to-action-color);
+    font-weight: normal;
+    font-size: 1.5em;
+    margin-top: 2em;
+}
+
+.menu-option-button-img-container {
+    margin-left: 50px;
+}
+
+.menu-option-button-img {
+    width: 100px;
+    height: 100%;
+    overflow: hidden;
+}
+
+.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+

@@ -1,0 +1,96 @@
+
+:root {
+--scrollbar-background-color: var(--light-color2);
+--scrollbar-track-color: var(--light-color4);
+--scrollbar-track-hover-color: var(--light-color6);
+}
+
+.folder-icon {
+width: 20px;
+height: 20px;
+vertical-align: bottom;
+margin-right: 3px;
+margin-top: 3px;
+margin-bottom: 3px;
+}
+
+.file-icon {
+width: 20px;
+height: 20px;
+vertical-align: text-bottom;
+margin-right: 3px;
+margin-top: 3px;
+}
+
+.display-changes-container {
+display: flex;
+gap: 20px;
+}
+.directory-container {
+width: 40vw;
+max-width: 500px;
+overflow: hidden;
+box-shadow: 0px 0px 3px 0px var(--menu-option-button-hover-box-shadow-color);
+border-radius: 5px;
+text-align: left;
+display: flex;
+flex-direction: column;
+text-wrap: nowrap;
+background-color: var(--menu-option-button-background-color);
+} 
+
+.directory-container > h3 {
+text-align: center;
+margin: 0px;
+padding: 20px;
+background-color: var(--header-background-color);
+}
+
+.directory-container-content {
+overflow: scroll;
+padding: 20px;
+height: 100%;
+overflow-y: hidden;
+}
+
+.directory-container-content::-webkit-scrollbar {
+height: 10px; 
+}
+
+.directory-container-content::-webkit-scrollbar-track {
+background: var(--scrollbar-background-color); 
+}
+
+.directory-container-content::-webkit-scrollbar-thumb {
+background: var(--scrollbar-track-color); 
+}
+
+.directory-container-content::-webkit-scrollbar-thumb:hover {
+background: var(--scrollbar-track-hover-color); 
+}
+
+.folder {
+font-weight: bold !important; 
+}
+
+.folder > button {
+color: var(--h3-color);
+cursor: pointer;
+background-color: transparent;
+text-decoration: none;
+border: none;
+font-size: 16px;
+margin: 0px;
+padding: 0px;
+font-weight: bold;
+}
+
+.file {
+font-weight: normal;
+font-size: 14px;
+color: var(--menu-option-button-description-color)
+}
+
+.hidden {
+display: none;
+}
