@@ -4,7 +4,7 @@ const { GoogleGenerativeAI } = require("@google/generative-ai");
 const genAI = new GoogleGenerativeAI(API_KEY);
 const {OrganizationAlgorithmStrategy} = require('./OrganizationAlrorithmStrategy');
 // API KEY
-const API_KEY = "AIzaSyBhrHB3uJygVJcbXXhPaZKI5xlFM6TTkWE";
+const API_KEY = "API_KEY_HERE";
 
 class GeminiAPIOrganizaitonAlgorithm  extends OrganizationAlgorithmStrategy {
     // CONSTRUCTOR
