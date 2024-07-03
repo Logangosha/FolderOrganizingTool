@@ -77,6 +77,7 @@ class GeminiAPINonRecursiveOrganizaitonAlgorithm  extends OrganizationAlgorithmS
             //         }
             //     }
             // }`;  
+            // console.log("Organized Directory is: " + organizedDirectory);
         return organizedDirectory;
     }
 
@@ -139,6 +140,7 @@ class GeminiAPINonRecursiveOrganizaitonAlgorithm  extends OrganizationAlgorithmS
         "Please Organize This Directory:\n"; 
         // CREATE JSON STRING 
         var directoryToJSON = JSON.stringify(originalDirectoryJSON, null, 2);
+        // console.log("Unorganized Directory is: " + directoryToJSON);
         // ADD JSON STRING TO PROMPT
         prompt += directoryToJSON;
         return prompt;

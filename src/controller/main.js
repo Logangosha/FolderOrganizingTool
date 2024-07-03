@@ -10,7 +10,7 @@ const { DirectoryManipulationPerformer } = require("./state_controllers/PerformD
 const { NonRecursiveStrategy } = require("../model/strategies/OrganizationStrategies/NonRecursiveStrategy.js");
 const { get } = require("http");
 // Replace the above import with the following import to use the RecursiveStrategy:
-// const { RecursiveStrategy } = require("../model/strategies/BaseStrategies/RecursiveStrategy.js");
+// const { RecursiveStrategy } = require("../model/strategies/OrganizationStrategies/RecursiveStrategy.js");
 
 // DEFAULT STRATEGIES
 const defaultStrategies = new NonRecursiveStrategy();
@@ -37,7 +37,6 @@ function createMainWindow()
         height: 600,
         minWidth: 750,
         icon: path.join(__dirname, "..", "view", "media", "images", "DefaultLogoWithCube.png"),
-        // frame: false,
         webPreferences: {
             contextIsolation: true,
             nodeIntegration: true,
