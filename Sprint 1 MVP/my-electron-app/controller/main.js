@@ -7,7 +7,7 @@ const path = require("path");
 const  { Directory, Subdirectory, DirectoryItem, DirectoryMetadata, DirectoryItemMetadata } = require("../model/FileSystemEntities.js");
 const { dir } = require("console");
 
-const API_KEY = "AIzaSyBhrHB3uJygVJcbXXhPaZKI5xlFM6TTkWE";
+const API_KEY = "API_KEY_HERE";
 const genAI = new GoogleGenerativeAI(API_KEY);
 
 function createMainWindow() {
