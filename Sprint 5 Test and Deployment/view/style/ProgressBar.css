@@ -1,0 +1,95 @@
+/* VARIABLES */
+:root {
+    --progress-bar-container-background-color: var(--light-color1);
+    --progress-bar-node-text-color: var(--light-color8);
+    --progress-bar-node-completed-background-color: var(--light-color6);
+    --progress-bar-node-incomplete-background-color: var(--light-color3);
+    --progress-bar-node-active-background-color: var(--light-color7);
+    --progress-bar-node-connection-completed-background-color: var(--light-color6);
+    --progress-bar-node-connection-incomplete-background-color: var(--light-color3);
+    --progress-bar-node-completed-text-color: var(--light-color8);
+}
+
+.progress-bar-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-bottom: 20px;
+    margin: 20px;
+    margin-top: 0px;
+    background-color: var(--progress-bar-container-background-color);
+    width: fit-content;
+    border-radius: 10px;
+}
+
+.progress-bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    height: 50px;
+    margin: 20px 0;
+    width: fit-content;
+    min-width: 500px;
+}
+
+.progress-bar-node {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: var(--progress-bar-node-text-color);
+    position: relative;
+}
+
+.progress-bar-node.completed {
+    background-color: var(--progress-bar-node-completed-background-color);
+    color: var(--progress-bar-node-completed-text-color);
+}
+
+.progress-bar-node.incomplete {
+    background-color: var(--progress-bar-node-incomplete-background-color);
+}
+
+.progress-bar-node.active {
+    background-color: var(--progress-bar-node-active-background-color);
+    color: var(--progress-bar-node-completed-text-color)
+}
+
+.progress-bar-node-text {
+    position: absolute;
+    top: 40px;
+    white-space: nowrap;
+    color: var(--progress-bar-node-text-color);
+}
+
+.progress-bar-node-connection {
+    height: 4px;
+    flex-grow: 1;
+}
+
+.progress-bar-node-connection.completed {
+    background-color: var(--progress-bar-node-connection-completed-background-color);
+}
+
+.progress-bar-node-connection.incomplete {
+    background-color: var(--progress-bar-node-connection-incomplete-background-color);
+}
+
+.progress-bar-node:not(:last-child)::after {
+    content: '';
+    height: 4px;
+    flex-grow: 1;
+    background-color: var(--light-color3);
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: -1;
+}

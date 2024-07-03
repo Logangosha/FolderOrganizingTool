@@ -1,0 +1,238 @@
+/* THIS STYLE SHEET IS FOR CLASSES / ELEMENTS THAT WILL APPEAR ON EACH STATE / PAGE  */
+
+/* GENERAL HTML STYLES */
+html, body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    height: 100%;
+    width: 100%;
+    background-color: var(--body-background-color);
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  scrollbar-width: none; 
+}
+
+/* HEADERS */
+h1 {
+    color: var(--h1-color);
+    font-weight: bold;
+}
+
+h2 {
+    color: var(--h2-color);
+    font-weight: normal;
+    margin-bottom: 0px;
+}
+
+h3 {
+    color: var(--h3-color);
+    font-weight:normal;
+
+}
+
+/* COLORS */
+/* DEFAULT COLOR THEME IS LIGHT */
+    :root{
+        /* LIGHT THEME */
+            --light-color1: #fffdf7; /* LIGHTEST */
+            --light-color2: #fffae7;
+            --light-color3: #fef4d3; 
+            --light-color4: #ffeca9; 
+            --light-color5: #ffea84; 
+            --light-color6: #ffea75; 
+            --light-color7: #ffe65b; 
+            --light-color8: #333333;
+            --light-color9: #000000; /* DARKEST */
+
+    
+        /* DARK THEME */
+            --dark-color1: #0C0C0C; /* DARKEST */
+            --dark-color2: #1C1C1C;
+            --dark-color3: #1f1f1f; 
+            --dark-color4: #2F2F2F; 
+            --dark-color5: #454545; 
+            --dark-color6: #efcd4b; 
+            --dark-color7: #f2d15f;
+            --dark-color8: #f5d873;
+            --dark-color9: #ffe897; /* LIGHTEST */
+
+        /* COMPONENT VARIABLES */
+            --body-background-color: var(--light-color1);
+            --header-background-color: var(--light-color3);
+            --main-content-background-color: var(--light-color1);
+            --footer-background-color: var(--light-color4);
+
+        /* TEXT COLORS */
+            --h1-color: var(--light-color8);
+            --h2-color: var(--light-color8);
+            --h3-color: var(--light-color8);
+            --footer-heading-color: var(--light-color8);
+            --footer-text-color: var(--light-color8);
+            --footer-link-color: var(--light-color8);
+            --menu-option-button-heading-color: var(--light-color8);
+            --menu-option-button-description-color: var(--light-color8);
+            --menu-option-button-call-to-action-color: var(--light-color8);
+
+        /* BUTTON COLORS */
+            --menu-option-button-background-color: var(--light-color2);
+            --menu-option-button-background-color-even: var(--light-color2);
+            --menu-option-button-hover-box-shadow-color: var(--light-color9);
+}
+
+@font-face {
+  font-family: 'Cascadia';
+  src: url('../media/fonts/Cascadia.ttf') format('truetype');
+}
+
+/* FONTS */
+* {
+    font-family: 'Cascadia';
+}
+
+/* LAYOUT */
+.header, .footer {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  /* HEADER */
+  .header {
+    display: flex;
+    align-items: center;
+    /* justify-content: center; */
+    justify-content: space-between;
+    background-color: var(--header-background-color);
+    gap: 16px;
+  }
+
+  .theme-toggle-button-container
+  {
+    flex-shrink: 0;
+    margin-right: 16px;
+  }
+
+  .theme-toggle-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .theme-toggle-img {
+    width: 30px;
+    height: 30px;
+  }
+
+  .center-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+  }
+
+  .logo-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0 16px;
+  }
+
+  .logo-img {
+    width: 50px;
+    height: 50px;
+  }
+
+    /* MAIN CONTENT */
+  .main-content {
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    scrollbar-width: none;
+    background-color: var(--main-content-background-color);
+    text-align: center;
+    align-items: center;
+    flex-grow: 1;
+    justify-content: center;
+  }
+
+  .main-content-heading {
+    padding-left: 16px;
+    width: 50%;
+    word-break: break-word;
+  }
+
+    /* FOOTER */
+  .footer {
+    background-color: var(--footer-background-color);
+    display: flex;
+    justify-content: space-evenly;
+    text-align: center;
+  }
+
+    /* STYLES FOR THE UNORDERED LIST INSIDE THE FOOTER */
+    .footer-list {
+        list-style-type: none;
+        padding: 0;
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    /* STYLES FOR EACH LIST ITEM INSIDE THE FOOTER LIST */
+    .footer-list-item {
+        padding: 20px;
+        margin: 20px;
+    }
+
+    /* STYLES FOR THE HEADINGS INSIDE EACH LIST ITEM */
+    .footer-heading {
+        margin-top : 5px;
+        margin-bottom : 5px;
+        color: var(--footer-heading-color);
+    }
+
+    /* STYLES FOR THE NESTED UNORDERED LISTS INSIDE EACH LIST ITEM */
+    .footer-sub-list {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    /* STYLES FOR THE LIST ITEMS INSIDE THE NESTED UNORDERED LISTS */
+
+    /* STYLES FOR THE LINKS INSIDE THE FOOTER */
+    .footer-link {
+        color: var(--footer-link-color);
+        font-weight: normal;
+    }
+
+    /* STYLES FOR TEXT INSIDE OF THE FOOTER*/
+    .footer-text {
+        color: var(--footer-text-color);
+        font-weight: normal;
+    }
+
+  /* CONTAINERS */
+  .main-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    justify-content: space-between;
+  }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+  }
+
+  .container.row {
+    flex-direction: row;
+  }
