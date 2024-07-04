@@ -1,0 +1,50 @@
+{
+  "name": "folder-organizing-tool",
+  "productName": "Folder Organizing Tool",
+  "version": "1.0.6",
+  "description": "Folder Organizing Tool",
+  "main": "./controller/main.js",
+  "scripts": {
+    "build-installer": "electron-builder",
+    "start": "electron-forge start",
+    "dev:watch": "npx electronmon --trace-warnings .",
+    "package": "electron-forge package",
+    "make": "electron-forge make"
+  },
+  "build": {
+    "appId": "FolderOrganizingTool",
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "icon": "view/media/images/DefaultLogoWithCube.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "installerIcon": "view/media/images/DefaultLogoWithCube.ico",
+      "uninstallerIcon": "view/media/images/DefaultLogoWithCube.ico",
+      "installerHeaderIcon": "view/media/images/DefaultLogoWithCube.ico",
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    }
+  },
+  "author": "Logan Gauchat",
+  "license": "MIT",
+  "devDependencies": {
+    "@electron-forge/cli": "^7.4.0",
+    "@electron-forge/maker-deb": "^7.4.0",
+    "@electron-forge/maker-rpm": "^7.4.0",
+    "@electron-forge/maker-squirrel": "^7.4.0",
+    "@electron-forge/maker-zip": "^7.4.0",
+    "@electron-forge/plugin-auto-unpack-natives": "^7.4.0",
+    "@electron-forge/plugin-fuses": "^7.4.0",
+    "@electron/fuses": "^1.8.0",
+    "electron": "^30.0.6"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.11.5",
+    "electron-forge": "^5.2.4",
+    "electron-squirrel-startup": "^1.0.1"
+  }
+}
