@@ -7,6 +7,7 @@ const { loadExecuteOrganizationAlgorithmStateView } = require('../../view/state_
 const { loadPerformDirectoryManipulationStateView } = require('../../view/state_views/PerformDirectoryManipulationStateView')
 const { loadSuccessFailNotificationStateView } = require('../../view/state_views/SuccessFailNotificationStateView')
 const { loadMainMenuStateView } = require('../../view/state_views/MainMenuStateView')
+const { loadOrganizationAlgorithmStateView } = require('../../view/state_views/OrganizationAlgorithmSelectionStateView')
 
 // ITEMS TO EXPOSE TO RENDERER PROCESS
 // EXPOSE stateManager OBJECT TO RENDERER PROCESS
@@ -20,6 +21,7 @@ contextBridge.exposeInMainWorld('stateManager', {
     loadExecuteOrganizationAlgorithmStateView: (selectedDirectoryPath) => loadExecuteOrganizationAlgorithmStateView(selectedDirectoryPath),
     loadPerformOrganizationStateView: (organizationAlgorithmResponse) => loadPerformDirectoryManipulationStateView(organizationAlgorithmResponse),
     loadSuccessFailNotificationStateView: (result) => loadSuccessFailNotificationStateView(result),
+    loadOrganizationAlgorithmStateView: () => loadOrganizationAlgorithmStateView(),
     loadMainMenuStateView: () => loadMainMenuStateView(),
     onThemeUpdate: (listener) => ipcRenderer.on('theme-update', listener),
     getCurrentTheme: () => {return ipcRenderer.invoke('get-current-theme')},

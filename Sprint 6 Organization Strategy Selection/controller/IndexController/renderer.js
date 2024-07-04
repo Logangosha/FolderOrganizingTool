@@ -10,6 +10,7 @@ const {
     loadExecuteOrganizationAlgorithmStateView, 
     loadPerformOrganizationStateView, 
     loadSuccessFailNotificationStateView,
+    loadOrganizationAlgorithmStateView,
     loadMainMenuStateView,
     onThemeUpdate,
     getCurrentTheme,
@@ -150,6 +151,7 @@ function updateTheme(shouldUseDarkColors)
 // UPDATE STATE
 async function updateState(newState, args = null)
 {
+    console.log("Updating state to:", newState);
     let tempState = newState; // get state from main
     if(currentState == tempState) { return; }
     currentState = tempState;
@@ -174,6 +176,7 @@ function loadStateView(state, args = null)
     else if(state == "changeApproval") { loadChangeApprovalStateView(args)}
     else if(state == "performOrganization") { loadPerformOrganizationStateView(args)}
     else if(state == "successFailNotification") { loadSuccessFailNotificationStateView(args)}
+    else if(state == "organizationAlgorithmSelection") { loadOrganizationAlgorithmStateView() }
     else if (state == "mainMenu") { loadMainMenuStateView() }
     else {
         console.log("State not found");

@@ -1,6 +1,7 @@
 // DEPENDENCIES
 const { Directory, Subdirectory, DirectoryItem, DirectoryMetadata, DirectoryItemMetadata }  = require("../../FileSystemEntities");
 const { GetDirectoryFromPathStrategy} = require("./GetDirectoryFromPathStrategy");
+const { app } = require("electron");
 const path = require("path");
 const fs = require("fs");
 
@@ -46,6 +47,10 @@ class GetDirectoryRecursivelyFromPath extends GetDirectoryFromPathStrategy
                     const directoryItem = new DirectoryItem();
                     // ADD METADATA ATTRIBUTES
                     directoryItem.Metadata = this.getMetadata(directoryItem, stats, filePath);
+
+                     // ADD ICON ATTRIBUTE TO DIRECTORY ITEM METADATA
+                     directoryItem.Metadata.icon = (await app.getFileIcon(filePath)).toDataURL();
+
                     // ADD ITEM TO CURRENT DIRECTORY
                     directory.addDirectoryItem(directoryItem);
 

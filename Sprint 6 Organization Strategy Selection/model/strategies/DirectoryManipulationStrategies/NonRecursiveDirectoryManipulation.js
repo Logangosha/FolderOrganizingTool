@@ -93,11 +93,8 @@ class NonRecursiveDirectoryManipulation extends DirectoryManipulationStrategy {
     async queueMoveItemToCorrectLocation(item, organizedDirectoryJson, directoryRootPath) {
         const currentItemName = item.Metadata.name;
         const currentItemPath = item.Metadata.path;
-        console.log(`Finding correct path for item: ${currentItemName}`);
         // FIND CORRECT PATH IN ORGANIZED DIRECTORY
         const correctItemPath = this.findCorrectPath(currentItemName, organizedDirectoryJson, directoryRootPath);
-        console.log(`Correct path for item: ${currentItemName} is ${correctItemPath}`);
-        console.log(`Current path for item: ${currentItemName} is ${currentItemPath}`);
         // IF CORRECT PATH IS NULL, ITEM DOESN'T EXIST IN ORGANIZED DIRECTORY
         if (correctItemPath === null) {
             throw new Error(`Could not find correct path for item: ${currentItemName}`);

@@ -74,7 +74,7 @@ function loadSuccessFailNotificationStateView(result) {
     
     // TRY AGAIN BUTTON EVENT LISTENER
   document.getElementById("try-again-btn").addEventListener('click', async () => {
-    ipcRenderer.invoke('transition-to-directory-selection-state');
+    ipcRenderer.invoke('transition-to-organization-algorithm-selection-state');
   });
 
     // MAIN MENU BUTTON EVENT LISTENER

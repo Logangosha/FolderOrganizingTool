@@ -10,14 +10,15 @@ const { DirectoryManipulationPerformer } = require("./state_controllers/PerformD
 const { NonRecursiveStrategy } = require("../model/strategies/OrganizationStrategies/NonRecursiveStrategy.js");
 const { get } = require("http");
 // Replace the above import with the following import to use the RecursiveStrategy:
-// const { RecursiveStrategy } = require("../model/strategies/BaseStrategies/RecursiveStrategy.js");
+const { RecursiveStrategy } = require("../model/strategies/OrganizationStrategies/RecursiveStrategy.js");
 
 // DEFAULT STRATEGIES
-const defaultStrategies = new NonRecursiveStrategy();
+let defaultStrategies = new NonRecursiveStrategy();
 
 // STATE REPRESENTATION
 const State = {
     MAIN_MENU: 'mainMenu',
+    ORGANIZATION_ALGORITHM_SELECTION: 'organizationAlgorithmSelection',
     DIRECTORY_SELECTION: 'directorySelection',
     DIRECTORY_CONFIRMATION: 'directoryConfirmation',
     EXECUTE_ORGANIZATION_ALGORITHM: 'executeOrganizationAlgorithm',
@@ -119,8 +120,14 @@ function createMainWindow()
     // TRANSITION TO MAIN MENU STATE
     ipcMain.handle('transition-to-main-menu-state', () => {setState(State.MAIN_MENU);});
 
+    // TRANSITION TO ORGANIZATION ALGORITHM SELECTION STATE
+    ipcMain.handle('transition-to-organization-algorithm-selection-state', () => {setState(State.ORGANIZATION_ALGORITHM_SELECTION);});
+
     // TRANSITION TO DIRECTORY SELECTION STATE
-    ipcMain.handle('transition-to-directory-selection-state', () => {setState(State.DIRECTORY_SELECTION);});
+    ipcMain.handle('transition-to-directory-selection-state', (events, organizationAlgorithmSelection) => {
+        defaultStrategies = (organizationAlgorithmSelection === "recursive" ? new RecursiveStrategy() : new NonRecursiveStrategy());
+        setState(State.DIRECTORY_SELECTION);
+    });
 
     // SELECT DIRECTORY HANDLER
     ipcMain.handle('select-directory', async () => {
@@ -168,6 +175,7 @@ function createMainWindow()
             console.log(`Executing Organization Algorithm`);
             // EXECUTE ORGANIZATION ALGORITHM
             let response = await executor.execute();
+            console.log("response.or")
             console.log(`Organization Algorithm executed`);
             // SET STATE TO CHANGE APPROVAL
             setState(State.CHANGE_APPROVAL, response);
