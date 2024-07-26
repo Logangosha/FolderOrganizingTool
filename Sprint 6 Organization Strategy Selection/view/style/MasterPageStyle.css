@@ -24,6 +24,10 @@ h1 {
     font-weight: bold;
 }
 
+.header-heading {
+  text-align: center;
+}
+
 h2 {
     color: var(--h2-color);
     font-weight: normal;
@@ -97,8 +101,8 @@ h3 {
 
 /* LAYOUT */
 .header, .footer {
-    padding-left: 16px;
-    padding-right: 16px;
+    padding-left: 30px;
+    padding-right: 30px;
   }
   /* HEADER */
   .header {
@@ -113,7 +117,7 @@ h3 {
   .theme-toggle-button-container
   {
     flex-shrink: 0;
-    margin-right: 16px;
+    padding: 0 16px;
   }
 
   .theme-toggle-button {

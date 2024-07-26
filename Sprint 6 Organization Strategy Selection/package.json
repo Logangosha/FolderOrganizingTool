@@ -17,14 +17,14 @@
       "target": [
         "nsis"
       ],
-      "icon": "view/media/images/DefaultLogoWithCube.ico"
+      "icon": "view/media/images/DefaultLogo.ico"
     },
     "nsis": {
       "oneClick": false,
       "allowToChangeInstallationDirectory": true,
-      "installerIcon": "view/media/images/DefaultLogoWithCube.ico",
-      "uninstallerIcon": "view/media/images/DefaultLogoWithCube.ico",
-      "installerHeaderIcon": "view/media/images/DefaultLogoWithCube.ico",
+      "installerIcon": "view/media/images/DefaultLogo.ico",
+      "uninstallerIcon": "view/media/images/DefaultLogo.ico",
+      "installerHeaderIcon": "view/media/images/DefaultLogo.ico",
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true
     }

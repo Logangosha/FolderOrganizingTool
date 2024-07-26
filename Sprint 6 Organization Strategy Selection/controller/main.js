@@ -34,8 +34,8 @@ function createMainWindow()
 {
     const mainWindow = new BrowserWindow({
         title: "Folder Organizing Tool",
-        width: 1000,
-        height: 600,
+        width: 750,
+        height: 800,
         minWidth: 750,
         icon: path.join(__dirname, "..", "view", "media", "images", "DefaultLogoWithCube.png"),
         // frame: false,
